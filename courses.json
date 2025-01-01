@@ -1,1 +1,8 @@
+[
+    { "number": "CS101", "name": "Intro to Computing", "credits": 3 },
+    { "number": "CS102", "name": "Algorithms", "credits": 4 },
+    { "number": "CS103", "name": "Data Structures", "credits": 4 },
+    { "number": "CS104", "name": "Operating Systems", "credits": 3 },
+    { "number": "CS105", "name": "Software Engineering", "credits": 3 }
+]
 
