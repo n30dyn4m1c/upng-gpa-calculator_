@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPA Calculator</title>
+    <title>UPNG GPA Calculator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
@@ -43,25 +43,37 @@
             select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
             input.course-input { font-size: 12px !important; padding: 5px; }
             .credits-input { font-size: 12px !important; padding: 5px; }
-
-            /* Mobile view for action buttons */
-            .btn-remove {
-                font-size: 14px;
-                padding: 5px;
-            }
-            .btn-remove::before {
-                content: '\2716'; /* Unicode for X symbol */
-                color: red;
-                font-size: 16px;
-                margin-right: 5px;
-            }
-            .btn-remove span { display: none; } /* Hide text on mobile */
         }
 
         /* Style for credits to match grade points */
         .credits-display {
             font-size: 14px;
             padding: 5px;
+        }
+
+        /* Match GPA result size with button text */
+        #result {
+            font-size: 16px; /* Same as button text */
+            padding: 5px;
+        }
+
+        /* Red X icon button with same red as Clear All button */
+        .btn-remove {
+            color: white;
+            background-color: #dc3545; /* Bootstrap danger red */
+            font-size: 16px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+        .btn-remove::before {
+            content: '\2716'; /* Unicode for X symbol */
         }
     </style>
 </head>
@@ -70,15 +82,18 @@
         <div class="header">
             <h1>UPNG GPA Calculator</h1>
         </div>
-        <button onclick="addCourseRow()" class="btn btn-secondary mb-3">Add Course</button>
+        <div class="button-container d-flex justify-content-between mb-3">
+            <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
+            <button onclick="clearAllCourses()" class="btn btn-danger">Clear All</button>
+        </div>
         <table id="coursesTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th style="width: 40%;">Course Code/Name</th>
+                    <th style="width: 55%;">Course Code/Name</th>
                     <th style="width: 10%;">Credits</th>
                     <th style="width: 20%;">Grade</th>
-                    <th style="width: 20%;">Grade Point</th>
-                    <th style="width: 10%;">Action</th>
+                    <th style="width: 10%;">Grade Point</th>
+                    <th style="width: 5%;"></th>
                 </tr>
             </thead>
             <tbody>
