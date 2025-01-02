@@ -58,7 +58,7 @@ function addCourseRow() {
         $(".course-input").last().autocomplete({
             source: function (request, response) {
                 var results = globalCourses.filter(course =>
-                    course.number.toLowerCase().includes(request.term.toLowerCase()) ||
+                    course.number.toString().toLowerCase().includes(request.term.toLowerCase()) ||
                     course.name.toLowerCase().includes(request.term.toLowerCase())
                 );
                 response(results.map(course => ({
@@ -87,7 +87,6 @@ function addCourseRow() {
     }, 100); // Delay to ensure DOM is ready
 }
 
-
 // Remove course row
 function removeCourseRow(button) {
     var row = button.parentNode.parentNode;
@@ -111,52 +110,25 @@ function updateGradePoints(select) {
     });
 }
 
-
 // Calculate CGPA
 function calculateCGPA() {
     console.log("Calculating CGPA...");
-
-
-
-    // Map to store the highest grade for each course
     var courseMap = {};
 
-    // Filter through allCourses array
     allCourses.forEach(course => {
-        // Skip courses with no valid grade
         if (isNaN(course.gradePoint) || course.gradePoint === "") return;
 
-        // Check if course already exists in the map
-        if (!courseMap[course.number]) {
-            // If not present, add it
+        if (!courseMap[course.number] || course.gradePoint > courseMap[course.number].gradePoint) {
             courseMap[course.number] = course;
-        } else {
-            // If present, update only if the new grade is higher
-            if (course.gradePoint > courseMap[course.number].gradePoint) {
-                courseMap[course.number] = course; // Replace with higher grade
-            }
         }
     });
 
-    console.log("Filtered Courses:", Object.values(courseMap)); // Debugging log
-
-    // Calculate CGPA using filtered courses
     var totalPoints = 0, totalCredits = 0;
     Object.values(courseMap).forEach(course => {
-        totalPoints += course.credits * course.gradePoint; // Multiply credits by grade point
-        totalCredits += course.credits; // Add credits
+        totalPoints += course.credits * course.gradePoint;
+        totalCredits += course.credits;
     });
 
-    // Final CGPA calculation
     var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-
-    // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
-
-    // Debugging logs
-    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
-
-    console.log("Filtered Courses:", Object.values(courseMap));
-    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
 }
-
