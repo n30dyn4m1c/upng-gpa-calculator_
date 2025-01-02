@@ -11,12 +11,90 @@
         .container { max-width: 800px; margin: auto; }
         .header { padding: 20px; text-align: center; background-color: #f8f9fa; margin-bottom: 20px; }
         .header h1 { color: #0d6efd; }
+        table th, table td { text-align: center; vertical-align: middle; padding: 10px; }
+
+        /* Add table borders */
+        table {
+            border: 1px solid #dee2e6;
+        }
+        table th, table td {
+            border: 1px solid #dee2e6;
+        }
+
         .ui-autocomplete {
             z-index: 1050;
             max-height: 200px;
             overflow-y: auto;
             background-color: #fff;
             border: 1px solid #ccc;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            body { font-size: 14px; padding: 10px; }
+            .container { padding: 10px; }
+            .header { padding: 10px; }
+            .header h1 { font-size: 20px; }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                font-size: 12px;
+            }
+            table th, table td {
+                padding: 5px;
+            }
+            button {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            input, select {
+                font-size: 12px;
+                padding: 5px;
+            }
+
+            /* Adjust autocomplete and dropdown fonts for mobile */
+            .ui-autocomplete { font-size: 12px !important; }
+            select.form-control { font-size: 12px !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+            select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
+            input.course-input { font-size: 12px !important; padding: 5px; }
+            .credits-input { font-size: 12px !important; padding: 5px; }
+        }
+
+        /* Style for credits to match grade points */
+        .credits-display {
+            font-size: 14px;
+            padding: 5px;
+        }
+
+        /* Match GPA result size with button text */
+        #result {
+            font-size: 16px; /* Same as button text */
+            padding: 5px;
+        }
+
+        /* Red X icon button with same red as Clear All button */
+        .btn-remove {
+            color: white;
+            background-color: #dc3545; /* Bootstrap danger red */
+            font-size: 16px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+        }
+        .btn-remove::before {
+            content: '\2716'; /* Unicode for X symbol */
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,15 +105,18 @@
         <div class="header">
             <h1>UPNG CGPA Calculator</h1>
         </div>
-        <button onclick="addCourseRow()" class="btn btn-secondary mb-3">Add Course</button>
-        <table id="coursesTable" class="table">
+        <div class="button-container">
+            <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
+            <button onclick="clearAllCourses()" class="btn btn-danger">Clear All</button>
+        </div>
+        <table id="coursesTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Course Code/Name</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Grade Point</th>
-                    <th>Action</th>
+                    <th style="width: 55%;">Course Code/Name</th>
+                    <th style="width: 10%;">Credits</th>
+                    <th style="width: 20%;">Grade</th>
+                    <th style="width: 10%;">Grade Point</th>
+                    <th style="width: 5%;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -44,6 +125,9 @@
         </table>
         <button onclick="calculateCGPA()" class="btn btn-success">Calculate CGPA</button>
         <div id="result" class="mt-3"></div>
+        <div class="mt-3">
+            <a href="index.html" class="btn btn-link">Go back to GPA Calculator</a>
+        </div>
     </div>
     <script src="cgpa.js"></script>
 </body>
