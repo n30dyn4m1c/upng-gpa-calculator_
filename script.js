@@ -31,7 +31,7 @@ function addCourseRow() {
     var cellAction = row.insertCell(4);
 
     cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name">`;
-    cellCredits.innerHTML = `<input type="number" class="form-control credits-input" readonly>`;
+    cellCredits.innerHTML = `<div class="credits-input"></div>`;
     cellGrade.innerHTML = `
         <select class="form-control grade-select" onchange="updateGradePoints(this)">
             <option value="">Select Grade</option>
@@ -54,7 +54,7 @@ function addCourseRow() {
         select: function (event, ui) {
             console.log("Selected Course:", ui.item);
             $(this).val(ui.item.label);
-            $(this).closest('tr').find('.credits-input').val(ui.item.credits);
+            $(this).closest('tr').find('.credits-input').text(ui.item.credits);
             return false;
         }
     });
@@ -78,7 +78,7 @@ function calculateGPA() {
     var totalPoints = 0, totalCredits = 0;
 
     rows.forEach(row => {
-        var credits = parseFloat(row.getElementsByClassName('credits-input')[0].value); // Credits
+        var credits = parseFloat(row.getElementsByClassName('credits-input')[0].textContent); // Credits
         var points = parseFloat(row.getElementsByClassName('grade-points')[0].textContent); // Grade point
 
         // Calculate totals
