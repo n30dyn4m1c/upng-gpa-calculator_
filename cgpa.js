@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Add course dynamically
 function addCourseRow() {
-    // Ensure courses are loaded
     console.log("All Courses:", allCourses);
 
     if (globalCourses.length === 0) {
@@ -38,10 +37,10 @@ function addCourseRow() {
     var cellAction = row.insertCell(4);
 
     // Create input fields
-    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name">`;
-    cellCredits.innerHTML = `<input type="number" class="form-control credits-input" readonly>`;
+    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name" style="width: 40%;">`;
+    cellCredits.innerHTML = `<input type="number" class="form-control credits-input" readonly style="width: 10%;">`;
     cellGrade.innerHTML = `
-        <select class="form-control grade-select" onchange="updateGradePoints(this)">
+        <select class="form-control grade-select" onchange="updateGradePoints(this)" style="width: 20%;">
             <option value="">Select Grade</option>
             <option value="5">HD</option>
             <option value="4">DI</option>
@@ -50,8 +49,8 @@ function addCourseRow() {
             <option value="1">CP</option>
             <option value="0">F</option>
         </select>`;
-    cellPoints.innerHTML = `<div class="grade-points"></div>`;
-    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn btn-danger">Remove</button>`;
+    cellPoints.innerHTML = `<div class="grade-points" style="width: 20%;"></div>`;
+    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn btn-danger" style="width: 10%;">Remove</button>`;
 
     // Attach autocomplete
     setTimeout(() => {
@@ -84,7 +83,7 @@ function addCourseRow() {
                 return false;
             }
         });
-    }, 100); // Delay to ensure DOM is ready
+    }, 100);
 }
 
 // Remove course row
@@ -113,22 +112,35 @@ function updateGradePoints(select) {
 // Calculate CGPA
 function calculateCGPA() {
     console.log("Calculating CGPA...");
+
+    // Map to store the highest grade for each course
     var courseMap = {};
 
+    // Filter through allCourses array
     allCourses.forEach(course => {
+        // Skip courses with no valid grade
         if (isNaN(course.gradePoint) || course.gradePoint === "") return;
 
+        // Check if course already exists in the map
         if (!courseMap[course.number] || course.gradePoint > courseMap[course.number].gradePoint) {
-            courseMap[course.number] = course;
+            courseMap[course.number] = course; // Replace with higher grade
         }
     });
 
+    console.log("Filtered Courses:", Object.values(courseMap)); // Debugging log
+
+    // Calculate CGPA using filtered courses
     var totalPoints = 0, totalCredits = 0;
     Object.values(courseMap).forEach(course => {
         totalPoints += course.credits * course.gradePoint;
         totalCredits += course.credits;
     });
 
+    // Final CGPA calculation
     var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+
+    // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
+
+    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
 }
