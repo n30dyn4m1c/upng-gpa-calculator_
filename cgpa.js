@@ -92,38 +92,45 @@ function updateGradePoints(select) {
 
 // Calculate CGPA
 function calculateCGPA() {
-    // Use a map to track the highest grade for each unique course
+    console.log("Calculating CGPA...");
+
+    // Map to store the highest grade for each course
     var courseMap = {};
 
-    // Iterate through all courses
+    // Filter through allCourses array
     allCourses.forEach(course => {
-        // Skip courses with no grade point (default 0)
-        if (course.gradePoint === 0 || isNaN(course.gradePoint)) return;
+        // Skip courses with no valid grade
+        if (isNaN(course.gradePoint) || course.gradePoint === "") return;
 
-        // Check if the course already exists in the map
+        // Check if course already exists in the map
         if (!courseMap[course.number]) {
-            // Add course if it's not in the map
+            // If not present, add it
             courseMap[course.number] = course;
         } else {
-            // Update only if the grade is higher
+            // If present, update only if the new grade is higher
             if (course.gradePoint > courseMap[course.number].gradePoint) {
-                courseMap[course.number] = course;
+                courseMap[course.number] = course; // Replace with higher grade
             }
         }
     });
 
+    console.log("Filtered Courses:", Object.values(courseMap)); // Debugging log
+
     // Calculate CGPA using filtered courses
     var totalPoints = 0, totalCredits = 0;
     Object.values(courseMap).forEach(course => {
-        totalPoints += course.credits * course.gradePoint; // Multiply credits by grade
+        totalPoints += course.credits * course.gradePoint; // Multiply credits by grade point
         totalCredits += course.credits; // Add credits
     });
 
-    // Calculate CGPA
+    // Final CGPA calculation
     var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
 
     // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
+
+    // Debugging logs
+    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
 }
 
 
