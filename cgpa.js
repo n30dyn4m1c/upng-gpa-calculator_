@@ -88,19 +88,37 @@ function updateGradePoints(select) {
 
 // Calculate CGPA
 function calculateCGPA() {
+    // Use a map to track the highest grade for each unique course
     var courseMap = {};
+
+    // Iterate through all courses
     allCourses.forEach(course => {
-        if (!courseMap[course.number] || courseMap[course.number].gradePoint < course.gradePoint) {
+        // Check if the course already exists in the map
+        if (!courseMap[course.number]) {
+            // If course is not in the map, add it
             courseMap[course.number] = course;
+        } else {
+            // If course exists, check grades:
+            if (course.gradePoint > courseMap[course.number].gradePoint) {
+                // Replace if the new grade is higher
+                courseMap[course.number] = course;
+            } else if (course.gradePoint === courseMap[course.number].gradePoint) {
+                // Same grade - ignore duplicates, keep only one
+                // No action needed, just skip duplicates
+            }
         }
     });
 
+    // Calculate CGPA using filtered courses
     var totalPoints = 0, totalCredits = 0;
     Object.values(courseMap).forEach(course => {
-        totalPoints += course.credits * course.gradePoint;
-        totalCredits += course.credits;
+        totalPoints += course.credits * course.gradePoint; // Multiply credits by grade
+        totalCredits += course.credits; // Add credits
     });
 
+    // Calculate CGPA
     var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+
+    // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
 }
