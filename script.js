@@ -2,11 +2,15 @@ var globalCourses = [];
 
 // Fetch courses from the local JSON file
 function fetchCourses() {
-    console.log("Fetching courses from courses.json...");
-    fetch('courses.json')
+    console.log("Fetching courses.json with cache-busting...");
+
+    // Append a timestamp to force fetching the latest data
+    const url = `courses.json?v=${new Date().getTime()}`; // Unique URL each time
+
+    fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log("Courses Loaded:", data);
+            console.log("Courses Loaded:", data); // Verify new data is fetched
             globalCourses = data; // Store the data globally for autocomplete
         })
         .catch(error => console.error("Failed to load courses:", error));
