@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Add course dynamically
 function addCourseRow() {
     // Ensure courses are loaded
+    console.log("All Courses:", allCourses);
+
     if (globalCourses.length === 0) {
         alert("Courses are still loading. Please wait and try again.");
         return;
@@ -114,6 +116,8 @@ function updateGradePoints(select) {
 function calculateCGPA() {
     console.log("Calculating CGPA...");
 
+
+
     // Map to store the highest grade for each course
     var courseMap = {};
 
@@ -151,26 +155,8 @@ function calculateCGPA() {
 
     // Debugging logs
     console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
+
+    console.log("Filtered Courses:", Object.values(courseMap));
+    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
 }
 
-
-select: function (event, ui) {
-    $(this).val(ui.item.label); // Display course info
-    $(this).closest('tr').find('.credits-input').val(ui.item.credits); // Autofill credits
-    
-    // Check if the course already exists in allCourses
-    var existingCourse = allCourses.find(c => c.number === ui.item.value);
-    if (!existingCourse) {
-        // Add only if not already in the list
-        allCourses.push({
-            number: ui.item.value,
-            credits: ui.item.credits,
-            gradePoint: 0 // Initialize grade point
-        });
-    }
-    return false; // Prevent default behavior
-}
-
-console.log("All Courses:", allCourses); // Logs all courses added
-console.log("Filtered Courses:", Object.values(courseMap)); // Logs filtered courses for CGPA
-console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
