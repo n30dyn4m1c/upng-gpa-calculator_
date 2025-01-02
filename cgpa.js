@@ -76,15 +76,19 @@ function removeCourseRow(button) {
 function updateGradePoints(select) {
     var gradePoint = parseFloat(select.value);
     var row = select.parentNode.parentNode;
+
+    // Update displayed grade point
     row.getElementsByClassName('grade-points')[0].textContent = gradePoint;
 
     // Update grade point in global array
     var courseName = row.getElementsByClassName('course-input')[0].value.split(' - ')[0];
-    var course = allCourses.find(c => c.number === courseName);
-    if (course) {
-        course.gradePoint = gradePoint;
-    }
+    allCourses.forEach(course => {
+        if (course.number === courseName) {
+            course.gradePoint = gradePoint; // Update grade point
+        }
+    });
 }
+
 
 // Calculate CGPA
 function calculateCGPA() {
@@ -93,18 +97,17 @@ function calculateCGPA() {
 
     // Iterate through all courses
     allCourses.forEach(course => {
+        // Skip courses with no grade point (default 0)
+        if (course.gradePoint === 0 || isNaN(course.gradePoint)) return;
+
         // Check if the course already exists in the map
         if (!courseMap[course.number]) {
-            // If course is not in the map, add it
+            // Add course if it's not in the map
             courseMap[course.number] = course;
         } else {
-            // If course exists, check grades:
+            // Update only if the grade is higher
             if (course.gradePoint > courseMap[course.number].gradePoint) {
-                // Replace if the new grade is higher
                 courseMap[course.number] = course;
-            } else if (course.gradePoint === courseMap[course.number].gradePoint) {
-                // Same grade - ignore duplicates, keep only one
-                // No action needed, just skip duplicates
             }
         }
     });
@@ -122,3 +125,25 @@ function calculateCGPA() {
     // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
 }
+
+
+select: function (event, ui) {
+    $(this).val(ui.item.label); // Display course info
+    $(this).closest('tr').find('.credits-input').val(ui.item.credits); // Autofill credits
+    
+    // Check if the course already exists in allCourses
+    var existingCourse = allCourses.find(c => c.number === ui.item.value);
+    if (!existingCourse) {
+        // Add only if not already in the list
+        allCourses.push({
+            number: ui.item.value,
+            credits: ui.item.credits,
+            gradePoint: 0 // Initialize grade point
+        });
+    }
+    return false; // Prevent default behavior
+}
+
+console.log("All Courses:", allCourses); // Logs all courses added
+console.log("Filtered Courses:", Object.values(courseMap)); // Logs filtered courses for CGPA
+console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
