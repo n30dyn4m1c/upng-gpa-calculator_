@@ -74,42 +74,48 @@ function updateGradePoints(select) {
 }
 
 function calculateGPA() {
-    var rows = document.querySelectorAll('#coursesTable tbody tr');
+    var rows = document.querySelectorAll('#coursesTable tbody tr'); // Get all rows
     var totalPoints = 0, totalCredits = 0;
     var invalidRows = false; // Track invalid rows
 
-    // Reset previous alert and highlights
+    // Reset alert and highlights
     var alertBox = document.getElementById('alertMessage');
     alertBox.classList.add('d-none'); // Hide alert initially
     rows.forEach(row => row.style.backgroundColor = ""); // Clear highlights
 
     rows.forEach(row => {
-        var credits = parseFloat(row.getElementsByClassName('credits-input')[0].value);
+        // Retrieve data from the row
+        var credits = parseFloat(row.getElementsByClassName('credits-input')[0].value); // Credits
         var gradeSelect = row.getElementsByClassName('grade-select')[0]; // Grade dropdown
-        var points = parseFloat(row.getElementsByClassName('grade-points')[0].textContent);
+        var points = parseFloat(row.getElementsByClassName('grade-points')[0].textContent); // Grade point
 
-        // Highlight row if grade is missing
-        if (gradeSelect.value === "") { // Missing grade
-            row.style.backgroundColor = "#ffcc80"; // Orange highlight
+        // Check if grade is missing
+        if (gradeSelect.value === "") { // Empty grade
+            row.style.backgroundColor = "#ffcc80"; // Highlight row in orange
             invalidRows = true; // Mark as invalid
         } else {
             row.style.backgroundColor = ""; // Reset valid rows
         }
 
+        // Calculate totals only for valid rows
         if (!isNaN(credits) && !isNaN(points)) {
             totalPoints += credits * points;
             totalCredits += credits;
         }
     });
 
-    // Show alert if there are invalid rows
+    // Show inline alert if there are invalid rows
     if (invalidRows) {
-        alertBox.classList.remove('d-none'); // Show alert
+        alertBox.classList.remove('d-none'); // Display alert
         return; // Stop GPA calculation
+    } else {
+        alertBox.classList.add('d-none'); // Hide alert if no errors
     }
 
-    // Calculate GPA if all rows are valid
+    // Calculate GPA
     var gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+
+    // Display the GPA result
     document.getElementById('result').textContent = `Your GPA is: ${gpa}`;
 }
 
