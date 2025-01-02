@@ -1,46 +1,42 @@
 var globalCourses = [];
-var allCourses = []; // Stores all courses for CGPA calculation
 
-// Fetch courses from the JSON file
+// Fetch courses from the local JSON file
 function fetchCourses() {
-    console.log("Fetching courses.json...");
-    const url = `courses.json?v=${new Date().getTime()}`; // Cache busting
+    console.log("Fetching courses.json with cache-busting...");
+
+    // Append a timestamp to force fetching the latest data
+    const url = `courses.json?v=${new Date().getTime()}`; // Unique URL each time
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log("Courses Loaded:", data);
-            globalCourses = data;
+            console.log("Courses Loaded:", data); // Verify new data is fetched
+            globalCourses = data; // Store the data globally for autocomplete
         })
         .catch(error => console.error("Failed to load courses:", error));
 }
 
-// Load courses when the page loads
 document.addEventListener("DOMContentLoaded", function () {
-    fetchCourses();
+    fetchCourses(); // Load courses when page loads
 });
 
-// Add course dynamically
+// Add a new course row dynamically
 function addCourseRow() {
-    console.log("All Courses:", allCourses);
-
-    if (globalCourses.length === 0) {
-        alert("Courses are still loading. Please wait and try again.");
-        return;
-    }
-
     var tbody = document.getElementById('coursesTable').getElementsByTagName('tbody')[0];
     var row = tbody.insertRow();
+
+    // Create cells
     var cellIndex = row.insertCell(0);
     var cellCredits = row.insertCell(1);
     var cellGrade = row.insertCell(2);
     var cellPoints = row.insertCell(3);
     var cellAction = row.insertCell(4);
 
-    // Create input fields
-    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name" style="width: 40%;">`;
-    cellCredits.innerHTML = `<input type="number" class="form-control credits-input" readonly style="width: 10%;">`;
+    // Populate cells
+    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name">`;
+    cellCredits.innerHTML = `<div class="credits-input"></div>`;
     cellGrade.innerHTML = `
-        <select class="form-control grade-select" onchange="updateGradePoints(this)" style="width: 20%;">
+        <select class="form-control grade-select" onchange="updateGradePoints(this)">
             <option value="">Select Grade</option>
             <option value="5">HD</option>
             <option value="4">DI</option>
@@ -49,98 +45,80 @@ function addCourseRow() {
             <option value="1">CP</option>
             <option value="0">F</option>
         </select>`;
-    cellPoints.innerHTML = `<div class="grade-points" style="width: 20%;"></div>`;
-    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn btn-danger" style="width: 10%;">Remove</button>`;
+    cellPoints.innerHTML = `<div class="grade-points"></div>`;
 
-    // Attach autocomplete
-    setTimeout(() => {
-        $(".course-input").last().autocomplete({
-            source: function (request, response) {
-                var results = globalCourses.filter(course =>
-                    course.number.toString().toLowerCase().includes(request.term.toLowerCase()) ||
-                    course.name.toLowerCase().includes(request.term.toLowerCase())
-                );
-                response(results.map(course => ({
-                    label: course.number + " - " + course.name,
-                    value: course.number,
-                    credits: course.credits
-                })));
-            },
-            select: function (event, ui) {
-                $(this).val(ui.item.label); // Display course info
-                $(this).closest('tr').find('.credits-input').val(ui.item.credits); // Autofill credits
+    // Add red 'X' button
+    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove"></button>`;
 
-                // Prevent duplicate entries
-                var existingCourse = allCourses.find(c => c.number === ui.item.value);
-                if (!existingCourse) {
-                    allCourses.push({
-                        number: ui.item.value,
-                        credits: ui.item.credits,
-                        gradePoint: 0 // Initialize grade point
-                    });
-                }
-                console.log("All Courses:", allCourses); // Debugging log
-                return false;
-            }
-        });
-    }, 100);
+
+    // Autocomplete for course inputs
+    $(cellIndex).find('input').autocomplete({
+        source: globalCourses.map(course => ({
+            label: course.number + " - " + course.name,
+            value: course.number,
+            credits: course.credits
+        })),
+        select: function (event, ui) {
+            console.log("Selected Course:", ui.item);
+            $(this).val(ui.item.label);
+            $(this).closest('tr').find('.credits-input').text(ui.item.credits);
+            return false;
+        }
+    });
 }
 
-// Remove course row
+// Remove a course row
 function removeCourseRow(button) {
     var row = button.parentNode.parentNode;
     row.parentNode.removeChild(row);
 }
 
-// Update grade points
+// Update grade points dynamically
 function updateGradePoints(select) {
-    var gradePoint = parseFloat(select.value);
+    var gradePoint = select.value;
     var row = select.parentNode.parentNode;
-
-    // Update displayed grade point
     row.getElementsByClassName('grade-points')[0].textContent = gradePoint;
-
-    // Update grade point in global array
-    var courseName = row.getElementsByClassName('course-input')[0].value.split(' - ')[0];
-    allCourses.forEach(course => {
-        if (course.number === courseName) {
-            course.gradePoint = gradePoint; // Update grade point
-        }
-    });
 }
 
-// Calculate CGPA
 function calculateCGPA() {
-    console.log("Calculating CGPA...");
+    var rows = document.querySelectorAll('#coursesTable tbody tr'); // Get all rows
+    var courseMap = new Map(); // Map to track highest grades
 
-    // Map to store the highest grade for each course
-    var courseMap = {};
+    rows.forEach(row => {
+        var course = row.getElementsByClassName('course-input')[0].value.split(' - ')[0]; // Course number
+        var credits = parseFloat(row.getElementsByClassName('credits-input')[0].textContent); // Credits
+        var points = parseFloat(row.getElementsByClassName('grade-points')[0].textContent); // Grade point
 
-    // Filter through allCourses array
-    allCourses.forEach(course => {
-        // Skip courses with no valid grade
-        if (isNaN(course.gradePoint) || course.gradePoint === "") return;
-
-        // Check if course already exists in the map
-        if (!courseMap[course.number] || course.gradePoint > courseMap[course.number].gradePoint) {
-            courseMap[course.number] = course; // Replace with higher grade
+        if (!isNaN(credits) && !isNaN(points)) {
+            // Handle repeated courses
+            if (!courseMap.has(course)) {
+                courseMap.set(course, { credits, points });
+            } else {
+                let existing = courseMap.get(course);
+                if (points > existing.points) {
+                    courseMap.set(course, { credits, points }); // Take the highest grade
+                }
+            }
         }
     });
 
-    console.log("Filtered Courses:", Object.values(courseMap)); // Debugging log
-
-    // Calculate CGPA using filtered courses
+    // Calculate totals
     var totalPoints = 0, totalCredits = 0;
-    Object.values(courseMap).forEach(course => {
-        totalPoints += course.credits * course.gradePoint;
-        totalCredits += course.credits;
+    courseMap.forEach((value) => {
+        totalPoints += value.credits * value.points;
+        totalCredits += value.credits;
     });
 
-    // Final CGPA calculation
+    // Calculate CGPA
     var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
 
     // Display the CGPA result
     document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
+}
 
-    console.log(`Total Points: ${totalPoints}, Total Credits: ${totalCredits}, CGPA: ${cgpa}`);
+function clearAllCourses() {
+    // Clear all rows in the table body
+    document.querySelector('#coursesTable tbody').innerHTML = '';
+    // Reset the CGPA result display
+    document.getElementById('result').textContent = '';
 }
