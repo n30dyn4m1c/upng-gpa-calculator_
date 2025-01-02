@@ -15,14 +15,53 @@
 
         /* Responsive table styling */
         @media (max-width: 768px) {
+            body { font-size: 14px; padding: 10px; }
+            .container { padding: 10px; }
+            .header { padding: 10px; }
+            .header h1 { font-size: 20px; }
             table {
                 display: block;
                 overflow-x: auto;
                 white-space: nowrap;
+                font-size: 12px;
             }
-            thead tr { display: table-header-group; }
-            tr { display: table-row; }
-            td, th { display: table-cell; }
+            table th, table td {
+                padding: 5px;
+            }
+            button {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            input, select {
+                font-size: 12px;
+                padding: 5px;
+            }
+
+            /* Adjust autocomplete and dropdown fonts for mobile */
+            .ui-autocomplete { font-size: 12px !important; }
+            select.form-control { font-size: 12px !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+            select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
+            input.course-input { font-size: 12px !important; padding: 5px; }
+            .credits-input { font-size: 12px !important; padding: 5px; }
+
+            /* Mobile view for action buttons */
+            .btn-remove {
+                font-size: 14px;
+                padding: 5px;
+            }
+            .btn-remove::before {
+                content: '\2716'; /* Unicode for X symbol */
+                color: red;
+                font-size: 16px;
+                margin-right: 5px;
+            }
+            .btn-remove span { display: none; } /* Hide text on mobile */
+        }
+
+        /* Style for credits to match grade points */
+        .credits-display {
+            font-size: 14px;
+            padding: 5px;
         }
     </style>
 </head>
