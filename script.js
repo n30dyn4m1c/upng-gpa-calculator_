@@ -73,21 +73,44 @@ function updateGradePoints(select) {
     row.getElementsByClassName('grade-points')[0].textContent = gradePoint;
 }
 
-// Calculate GPA
 function calculateGPA() {
     var rows = document.querySelectorAll('#coursesTable tbody tr');
     var totalPoints = 0, totalCredits = 0;
+    var invalidRows = false; // Track invalid rows
+
+    // Reset previous alert and highlights
+    var alertBox = document.getElementById('alertMessage');
+    alertBox.classList.add('d-none'); // Hide alert initially
+    rows.forEach(row => row.style.backgroundColor = ""); // Clear highlights
 
     rows.forEach(row => {
         var credits = parseFloat(row.getElementsByClassName('credits-input')[0].value);
+        var gradeSelect = row.getElementsByClassName('grade-select')[0]; // Grade dropdown
         var points = parseFloat(row.getElementsByClassName('grade-points')[0].textContent);
+
+        // Highlight row if grade is missing
+        if (gradeSelect.value === "") { // Missing grade
+            row.style.backgroundColor = "#ffcc80"; // Orange highlight
+            invalidRows = true; // Mark as invalid
+        } else {
+            row.style.backgroundColor = ""; // Reset valid rows
+        }
+
         if (!isNaN(credits) && !isNaN(points)) {
             totalPoints += credits * points;
             totalCredits += credits;
         }
     });
 
+    // Show alert if there are invalid rows
+    if (invalidRows) {
+        alertBox.classList.remove('d-none'); // Show alert
+        return; // Stop GPA calculation
+    }
+
+    // Calculate GPA if all rows are valid
     var gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
     document.getElementById('result').textContent = `Your GPA is: ${gpa}`;
 }
+
 
