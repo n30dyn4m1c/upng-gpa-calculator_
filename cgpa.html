@@ -3,24 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPNG CGPA Calculator</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>CGPA Calculator</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
         body { padding: 20px; font-family: Arial, sans-serif; }
         .container { max-width: 800px; margin: auto; }
         .header { padding: 20px; text-align: center; background-color: #f8f9fa; margin-bottom: 20px; }
         .header h1 { color: #0d6efd; }
-        .ui-autocomplete {
-            z-index: 1050;
-            max-height: 200px;
-            overflow-y: auto;
-            background-color: #fff;
-            border: 1px solid #ccc;
-        }
+        table th, table td { text-align: center; vertical-align: middle; padding: 10px; }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,23 +20,28 @@
             <h1>UPNG CGPA Calculator</h1>
         </div>
         <button onclick="addCourseRow()" class="btn btn-secondary mb-3">Add Course</button>
-        <table id="coursesTable" class="table">
+        <table id="coursesTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Course Code/Name</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Grade Point</th>
-                    <th>Action</th>
+                    <th style="width: 40%;">Course Code/Name</th>
+                    <th style="width: 10%;">Credits</th>
+                    <th style="width: 20%;">Grade</th>
+                    <th style="width: 20%;">Grade Point</th>
+                    <th style="width: 10%;">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Rows dynamically added here -->
+                <!-- Rows will be added dynamically -->
             </tbody>
         </table>
-        <button onclick="calculateCGPA()" class="btn btn-success">Calculate CGPA</button>
+        <button onclick="calculateCGPA()" class="btn btn-primary">Calculate CGPA</button>
         <div id="result" class="mt-3"></div>
+        <div class="mt-3">
+            <a href="index.html" class="btn btn-link">Go to GPA Calculator</a>
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="cgpa.js"></script>
 </body>
 </html>
