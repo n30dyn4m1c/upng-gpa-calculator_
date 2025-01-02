@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Add course dynamically
 function addCourseRow() {
+    // Ensure courses are loaded
+    if (globalCourses.length === 0) {
+        alert("Courses are still loading. Please wait and try again.");
+        return;
+    }
+
     var tbody = document.getElementById('coursesTable').getElementsByTagName('tbody')[0];
     var row = tbody.insertRow();
     var cellIndex = row.insertCell(0);
@@ -29,6 +35,7 @@ function addCourseRow() {
     var cellPoints = row.insertCell(3);
     var cellAction = row.insertCell(4);
 
+    // Create input fields
     cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name">`;
     cellCredits.innerHTML = `<input type="number" class="form-control credits-input" readonly>`;
     cellGrade.innerHTML = `
@@ -47,24 +54,37 @@ function addCourseRow() {
     // Attach autocomplete
     setTimeout(() => {
         $(".course-input").last().autocomplete({
-            source: globalCourses.map(course => ({
-                label: course.number + " - " + course.name,
-                value: course.number,
-                credits: course.credits
-            })),
+            source: function (request, response) {
+                var results = globalCourses.filter(course =>
+                    course.number.toLowerCase().includes(request.term.toLowerCase()) ||
+                    course.name.toLowerCase().includes(request.term.toLowerCase())
+                );
+                response(results.map(course => ({
+                    label: course.number + " - " + course.name,
+                    value: course.number,
+                    credits: course.credits
+                })));
+            },
             select: function (event, ui) {
                 $(this).val(ui.item.label); // Display course info
                 $(this).closest('tr').find('.credits-input').val(ui.item.credits); // Autofill credits
-                allCourses.push({
-                    number: ui.item.value,
-                    credits: ui.item.credits,
-                    gradePoint: 0 // Initialize grade point
-                });
-                return false; // Prevent default behavior
+
+                // Prevent duplicate entries
+                var existingCourse = allCourses.find(c => c.number === ui.item.value);
+                if (!existingCourse) {
+                    allCourses.push({
+                        number: ui.item.value,
+                        credits: ui.item.credits,
+                        gradePoint: 0 // Initialize grade point
+                    });
+                }
+                console.log("All Courses:", allCourses); // Debugging log
+                return false;
             }
         });
-    }, 100);
+    }, 100); // Delay to ensure DOM is ready
 }
+
 
 // Remove course row
 function removeCourseRow(button) {
