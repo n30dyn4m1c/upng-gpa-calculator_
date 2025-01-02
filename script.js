@@ -43,7 +43,7 @@ function addCourseRow() {
             <option value="0">F</option>
         </select>`;
     cellPoints.innerHTML = `<div class="grade-points"></div>`;
-    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn btn-danger btn-remove"><span class="d-none d-md-inline">Remove</span><span class="d-md-none">&#10060;</span></button>`;
+    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove"></button>`; // Updated button styling
 
     $(cellIndex).find('input').autocomplete({
         source: globalCourses.map(course => ({
@@ -93,4 +93,11 @@ function calculateGPA() {
 
     // Display the GPA result
     document.getElementById('result').textContent = `Your GPA is: ${gpa}`;
+}
+
+function clearAllCourses() {
+    // Clear all rows in the table body
+    document.querySelector('#coursesTable tbody').innerHTML = '';
+    // Reset the GPA result display
+    document.getElementById('result').textContent = '';
 }
