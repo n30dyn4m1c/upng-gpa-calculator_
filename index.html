@@ -76,11 +76,26 @@
             content: '\2716'; /* Unicode for X symbol */
         }
     </style>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+      </script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>UPNG GPA Calculator</h1>
+            <p style="text-align: left;">Calculate Grade Point Average (GPA) for a single semester or academic year at the University of Papua New Guinea. Enter your courses, and grades to get started.</p>
+
         </div>
         <div class="button-container d-flex justify-content-between mb-3">
             <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
@@ -103,7 +118,25 @@
         <button onclick="calculateGPA()" class="btn btn-primary">Calculate GPA</button>
         <div id="result" class="mt-3"></div>
         <div class="mt-3">
+           
+            <b><p>GPA Notes:</p></b>
+            
+            <ul style="text-align: left;">
+              <li>Each course must be unique—duplicates are not allowed.</li>
+              <li>Grades points are based on the following scale:
+                <ul>
+                  <li>HD = 5, DI = 4, CR = 3, PA = 2, CP = 1, F = 0</li>
+                </ul>
+              </li>
+              <li>The formula used is:
+               <p style="text-align: center; font-size: 18px;">GPA = \( \frac{\sum (\text{Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)</p>
+              </li>
+              <li>Use the <a href="cgpa.html">CGPA Calculator</a> for cumulative results across multiple semesters including repeated courses.</li>
+              
+            </ul>
+
             <a href="cgpa.html" class="btn btn-link">Go to CGPA Calculator</a>
+          
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
