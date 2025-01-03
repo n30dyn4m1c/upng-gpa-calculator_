@@ -97,6 +97,19 @@
             content: '\2716'; /* Unicode for X symbol */
         }
     </style>
+      <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+      </script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
@@ -104,6 +117,7 @@
     <div class="container">
         <div class="header">
             <h1>UPNG CGPA Calculator</h1>
+            <p style="text-align: left;">Calculate Cumulative Grade Point Average (CGPA) for courses studied across multiple semesters or academic years at the University of Papua New Guinea. You can enter repeated courses.</p>
         </div>
         <div class="button-container">
             <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
@@ -126,6 +140,19 @@
         <button onclick="calculateCGPA()" class="btn btn-success">Calculate CGPA</button>
         <div id="result" class="mt-3"></div>
         <div class="mt-3">
+            <b><p>CGPA Notes:</p></b>
+<ul style="text-align: left;">
+  <li>Repeat courses are allowed, but the highest grade attained will be used for calculation.</li>
+  <li>Grade points are based on the following scale:
+    <ul>
+      <li>HD = 5, DI = 4, CR = 3, PA = 2, CP = 1, F = 0</li>
+    </ul>
+  </li>
+  <li>The formula used is:
+    <p style="text-align: center; font-size: 18px;">CGPA = \( \frac{\sum (\text{Highest Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)</p>
+  </li>
+  <li>CGPA calculations apply only within the same academic program. If you enroll in a new program, a separate CGPA calculation will begin for that program.</li>
+</ul>
             <a href="index.html" class="btn btn-link">Go back to GPA Calculator</a>
         </div>
     </div>
