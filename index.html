@@ -41,6 +41,11 @@
             .ui-autocomplete { font-size: 12px !important; }
             select.form-control { font-size: 12px !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
             select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
+            select.form-control {
+                text-overflow: clip !important;
+                white-space: nowrap !important;
+                overflow: visible !important;
+            }
             input.course-input { font-size: 12px !important; padding: 5px; }
             .credits-input { font-size: 12px !important; padding: 5px; }
         }
@@ -94,7 +99,7 @@
     <div class="container">
         <div class="header">
             <h1>UPNG GPA Calculator</h1>
-            <p style="text-align: left;">Calculate Grade Point Average (GPA) for a single semester or academic year at the University of Papua New Guinea. Enter your courses, and grades to get started.</p>
+            <p style="text-align: left;">Calculate Grade Point Average (GPA) for a single semester or academic year at the University of Papua New Guinea.</p>
 
         </div>
         <div class="button-container d-flex justify-content-between mb-3">
@@ -119,11 +124,11 @@
         <div id="result" class="mt-3"></div>
         <div class="mt-3">
            
-            <b><p>GPA Notes:</p></b>
+            <b><p>GPA Calculation Notes:</p></b>
             
             <ul style="text-align: left;">
-              <li>Each course must be unique—duplicates are not allowed.</li>
-              <li>Grades points are based on the following scale:
+              <li>Repeat courses are not allowed.</li>
+              <li>Grades are based on the following scale:
                 <ul>
                   <li>HD = 5, DI = 4, CR = 3, PA = 2, CP = 1, F = 0</li>
                 </ul>
@@ -131,7 +136,7 @@
               <li>The formula used is:
                <p style="text-align: center; font-size: 18px;">GPA = \( \frac{\sum (\text{Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)</p>
               </li>
-              <li>Use the CGPA Calculator for cumulative results across multiple semesters including repeated courses.</li>
+              <li>For cumulative results across multiple semesters or years including repeated courses, use the CGPA Calculator.</li>
               
             </ul>
 
