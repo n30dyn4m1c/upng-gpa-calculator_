@@ -60,13 +60,20 @@
 
             /* Adjust autocomplete and dropdown fonts for mobile */
             .ui-autocomplete { font-size: 12px !important; }
-            select.form-control { font-size: 12px !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
-            select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
+             select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
             select.form-control {
-                text-overflow: clip !important;
-                white-space: nowrap !important;
-                overflow: visible !important;
-                        }
+            font-size: 12px !important;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-overflow: ellipsis !important; /* Prevent truncation */
+            white-space: nowrap !important; /* Keep text in one line */
+            overflow: visible !important; /* Ensure full text visibility */
+            display: block !important;
+            min-width: 100px !important;
+            max-width: 100%;
+            }
+
             input.course-input { font-size: 12px !important; padding: 5px; }
             .credits-input { font-size: 12px !important; padding: 5px; }
         }
