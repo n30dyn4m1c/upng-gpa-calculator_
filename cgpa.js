@@ -33,7 +33,7 @@ function addCourseRow() {
     var cellAction = row.insertCell(4);
 
     // Populate cells
-    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course number or name">`;
+    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course">`;
     cellCredits.innerHTML = `<div class="credits-input"></div>`;
     cellGrade.innerHTML = `
         <select class="form-control grade-select" onchange="updateGradePoints(this)">
