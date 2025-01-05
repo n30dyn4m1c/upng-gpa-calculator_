@@ -62,6 +62,11 @@
             .ui-autocomplete { font-size: 12px !important; }
             select.form-control { font-size: 12px !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; }
             select.form-control::-ms-expand { display: none; } /* Hide dropdown arrow in IE */
+            select.form-control {
+                text-overflow: clip !important;
+                white-space: nowrap !important;
+                overflow: visible !important;
+                        }
             input.course-input { font-size: 12px !important; padding: 5px; }
             .credits-input { font-size: 12px !important; padding: 5px; }
         }
@@ -117,7 +122,7 @@
     <div class="container">
         <div class="header">
             <h1>UPNG CGPA Calculator</h1>
-            <p style="text-align: left;">Calculate Cumulative Grade Point Average (CGPA) for courses studied across multiple semesters or academic years at the University of Papua New Guinea. You can enter repeated courses.</p>
+            <p style="text-align: left;">Calculate Cumulative Grade Point Average (CGPA) for courses studied across multiple semesters or academic years at the University of Papua New Guinea.</p>
         </div>
         <div class="button-container">
             <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
@@ -140,10 +145,10 @@
         <button onclick="calculateCGPA()" class="btn btn-success">Calculate CGPA</button>
         <div id="result" class="mt-3"></div>
         <div class="mt-3">
-            <b><p>CGPA Notes:</p></b>
+            <b><p>CGPA Calculation Notes:</p></b>
 <ul style="text-align: left;">
   <li>Repeat courses are allowed, but the highest grade attained will be used for calculation.</li>
-  <li>Grade points are based on the following scale:
+  <li>Grades are based on the following scale:
     <ul>
       <li>HD = 5, DI = 4, CR = 3, PA = 2, CP = 1, F = 0</li>
     </ul>
