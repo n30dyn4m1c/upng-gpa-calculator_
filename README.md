@@ -47,3 +47,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 Developed with UPNG academic structure in mind. Feedback and contributions welcome.
 
+## 👤 Author
+
+**Neo Malesa**  
+Software Developer  
+ICT Division, University of Papua New Guinea  
+[GitHub](https://github.com/n30dyn4m1c)
+
+
