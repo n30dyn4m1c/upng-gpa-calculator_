@@ -64,8 +64,11 @@
 
         /* Match GPA result size with button text */
         #result {
-            font-size: 16px; /* Same as button text */
-            padding: 5px;
+            font-size: 18px;
+        font-weight: bold;
+        color: #0d6efd; /* Bootstrap primary blue */
+        padding: 10px 0;
+        text-align: center;
         }
 
         /* Red X icon button with same red as Clear All button */
@@ -108,10 +111,8 @@
             <p style="text-align: left;">Calculate Grade Point Average (GPA) for a single semester or academic year at the University of Papua New Guinea.</p>
 
         </div>
-        <div class="button-container d-flex justify-content-between mb-3">
-            <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
-            <button onclick="clearAllCourses()" class="btn btn-danger">Clear All</button>
-        </div>
+
+
         <table id="coursesTable" class="table table-bordered">
             <thead>
                 <tr>
@@ -126,10 +127,17 @@
                 <!-- Rows will be added dynamically -->
             </tbody>
         </table>
-        <button onclick="calculateGPA()" class="btn btn-primary">Calculate GPA</button>
+        <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+            <button onclick="calculateGPA()" class="btn btn-primary mb-2">Calculate GPA</button>
+          
+            <div class="d-flex gap-2">
+              <button onclick="addCourseRow()" class="btn btn-secondary">Add Course</button>
+              <button onclick="clearAllCourses()" class="btn btn-danger">Clear All</button>
+            </div>
+          </div>
         <div id="result" class="mt-3"></div>
         <div class="mt-3">
-           
+            <hr>
             <b><p>GPA Calculation Notes:</p></b>
             
             <ul style="text-align: left;">
@@ -149,6 +157,15 @@
             <a href="cgpa.html" class="btn btn-link">Go to CGPA Calculator</a>
           
         </div>
+        <hr>
+        <p class="text-center text-muted" style="font-size: 11px; margin-top: 10px;">
+            Disclaimer: This tool is provided for personal use only and is not an official UPNG system. Please verify results with your School or Student Administration.
+          </p>
+        <p class="text-center text-muted" style="font-size: 11px; margin-top: 20px;">
+            Developed by <strong>Neo Malesa</strong> • <a href="mailto:n30dyn4m1c@gmail.com">n30dyn4m1c@gmail.com</a><br>
+            Last updated: July 2025
+          </p>
+          
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
