@@ -2,18 +2,23 @@ var globalCourses = [];
 
 // Fetch courses from the local JSON file
 function fetchCourses() {
-    console.log("Fetching courses.json with cache-busting...");
+    if (typeof globalCourseData !== 'undefined') {
+        globalCourses = globalCourseData;
+        console.log("Courses Loaded from local courses.js (CGPA):", globalCourses.length);
+        return;
+    }
 
-    // Append a timestamp to force fetching the latest data
-    const url = `courses.json?v=${new Date().getTime()}`; // Unique URL each time
-
+    const url = `courses.json?v=${new Date().getTime()}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log("Courses Loaded:", data); // Verify new data is fetched
-            globalCourses = data; // Store the data globally for autocomplete
+            globalCourses = data;
+            console.log("Courses Loaded via Fetch (CGPA):", globalCourses.length);
         })
-        .catch(error => console.error("Failed to load courses:", error));
+        .catch(error => {
+            console.error("Fetch failed (CGPA):", error);
+            globalCourses = [];
+        });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -33,11 +38,15 @@ function addCourseRow() {
     var cellAction = row.insertCell(4);
 
     // Populate cells
-    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course">`;
-    cellCredits.innerHTML = `<div class="credits-input"></div>`;
+    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course code or name">`;
+    cellIndex.setAttribute('data-label', 'Course');
+
+    cellCredits.innerHTML = `<div class="credits-input text-center" style="font-weight: 600;">-</div>`;
+    cellCredits.setAttribute('data-label', 'Credits');
+
     cellGrade.innerHTML = `
         <select class="form-control grade-select" onchange="updateGradePoints(this)">
-            <option value="">Select Grade</option>
+            <option value="">Select</option>
             <option value="5">HD</option>
             <option value="4">DI</option>
             <option value="3">CR</option>
@@ -45,26 +54,61 @@ function addCourseRow() {
             <option value="1">CP</option>
             <option value="0">F</option>
         </select>`;
-    cellPoints.innerHTML = `<div class="grade-points"></div>`;
+    cellGrade.setAttribute('data-label', 'Grade');
 
-    // Add red 'X' button
-    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove"></button>`;
+    cellPoints.innerHTML = `<div class="grade-points text-center" style="font-weight: 600;">-</div>`;
+    cellPoints.setAttribute('data-label', 'GP');
+
+    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove" title="Remove Course">&times;</button>`;
+    cellAction.setAttribute('data-label', 'Action');
 
 
     // Autocomplete for course inputs
-    $(cellIndex).find('input').autocomplete({
-        source: globalCourses.map(course => ({
-            label: course.number + " - " + course.name,
-            value: course.number,
-            credits: course.credits
-        })),
+    var $input = $(cellIndex).find('input');
+
+    $input.autocomplete({
+        minLength: 1,
+        delay: 200,
+        source: function (request, response) {
+            console.log("Searching for (CGPA):", request.term);
+            if (!globalCourses || globalCourses.length === 0) {
+                console.warn("Autocomplete called but globalCourses is empty.");
+                response([]);
+                return;
+            }
+            var term = request.term.toLowerCase();
+            var filtered = globalCourses.filter(function (c) {
+                var num = String(c.number).toLowerCase();
+                var name = String(c.name).toLowerCase();
+                return num.includes(term) || name.includes(term);
+            }).map(function (c) {
+                return {
+                    label: c.number + " - " + c.name,
+                    value: c.number,
+                    credits: c.credits
+                };
+            });
+            console.log("Found results (CGPA):", filtered.length);
+            response(filtered.slice(0, 15));
+        },
         select: function (event, ui) {
-            console.log("Selected Course:", ui.item);
             $(this).val(ui.item.label);
             $(this).closest('tr').find('.credits-input').text(ui.item.credits);
             return false;
+        },
+        focus: function (event, ui) {
+            return false;
         }
     });
+
+    var instance = $input.autocomplete("instance");
+    if (instance) {
+        instance._renderItem = function (ul, item) {
+            return $("<li>")
+                .append("<div>" + item.label + "</div>")
+                .appendTo(ul);
+        };
+    }
 }
 
 // Remove a course row

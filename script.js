@@ -3,17 +3,25 @@ var selectedCourses = new Set(); // Store selected courses to track duplicates
 
 // Fetch courses from the local JSON file
 function fetchCourses() {
-    console.log("Fetching courses.json with cache-busting...");
+    // If courses.js is loaded, use it directly (works in file:// protocol)
+    if (typeof globalCourseData !== 'undefined') {
+        globalCourses = globalCourseData;
+        console.log("Courses Loaded from local courses.js:", globalCourses.length);
+        return;
+    }
 
-    const url = `courses.json?v=${new Date().getTime()}`; // Unique URL each time
-
+    console.log("Attempting to fetch courses.json...");
+    const url = `courses.json?v=${new Date().getTime()}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log("Courses Loaded:", data);
             globalCourses = data;
+            console.log("Courses Loaded via Fetch:", globalCourses.length);
         })
-        .catch(error => console.error("Failed to load courses:", error));
+        .catch(error => {
+            console.error("Fetch failed, and local courses.js not found:", error);
+            globalCourses = [];
+        });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -30,11 +38,15 @@ function addCourseRow() {
     var cellPoints = row.insertCell(3);
     var cellAction = row.insertCell(4);
 
-    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course">`;
-    cellCredits.innerHTML = `<div class="credits-input"></div>`;
+    cellIndex.innerHTML = `<input type="text" class="form-control course-input" placeholder="Enter course code or name">`;
+    cellIndex.setAttribute('data-label', 'Course');
+
+    cellCredits.innerHTML = `<div class="credits-input text-center" style="font-weight: 600;">-</div>`;
+    cellCredits.setAttribute('data-label', 'Credits');
+
     cellGrade.innerHTML = `
         <select class="form-control grade-select" onchange="updateGradePoints(this)">
-            <option value="">Select Grade</option>
+            <option value="">Select</option>
             <option value="5">HD</option>
             <option value="4">DI</option>
             <option value="3">CR</option>
@@ -42,31 +54,66 @@ function addCourseRow() {
             <option value="1">CP</option>
             <option value="0">F</option>
         </select>`;
-    cellPoints.innerHTML = `<div class="grade-points"></div>`;
-    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove"></button>`; // Red X button
+    cellGrade.setAttribute('data-label', 'Grade');
 
-    $(cellIndex).find('input').autocomplete({
-        source: globalCourses.map(course => ({
-            label: course.number + " - " + course.name,
-            value: course.number,
-            credits: course.credits
-        })),
+    cellPoints.innerHTML = `<div class="grade-points text-center" style="font-weight: 600;">-</div>`;
+    cellPoints.setAttribute('data-label', 'GP');
+
+    cellAction.innerHTML = `<button onclick="removeCourseRow(this)" class="btn-remove" title="Remove Course">&times;</button>`;
+    cellAction.setAttribute('data-label', 'Action');
+
+    var $input = $(cellIndex).find('input');
+
+    $input.autocomplete({
+        minLength: 1,
+        delay: 200,
+        source: function (request, response) {
+            console.log("Searching for:", request.term);
+            if (!globalCourses || globalCourses.length === 0) {
+                console.warn("Autocomplete called but globalCourses is empty.");
+                response([]);
+                return;
+            }
+            var term = request.term.toLowerCase();
+            var filtered = globalCourses.filter(function (c) {
+                var num = String(c.number).toLowerCase();
+                var name = String(c.name).toLowerCase();
+                return num.includes(term) || name.includes(term);
+            }).map(function (c) {
+                return {
+                    label: c.number + " - " + c.name,
+                    value: c.number,
+                    credits: c.credits
+                };
+            });
+            console.log("Found results:", filtered.length);
+            response(filtered.slice(0, 15));
+        },
         select: function (event, ui) {
-            // Check for duplicates
             if (selectedCourses.has(ui.item.value)) {
-                alert("You have already selected this course. You cannot repeat a course in the same semester or academic year. Use the CGPA calculator for repetitions.");
-                $(this).val(''); // Clear the duplicate input
+                alert("You have already selected this course. You cannot repeat a course in the same semester or academic year.");
+                $(this).val('');
             } else {
-                // Add course to selectedCourses
                 selectedCourses.add(ui.item.value);
-
-                console.log("Selected Course:", ui.item);
                 $(this).val(ui.item.label);
                 $(this).closest('tr').find('.credits-input').text(ui.item.credits);
             }
             return false;
+        },
+        focus: function (event, ui) {
+            // Optional: prevent the value from being placed in the input on focus
+            return false;
         }
     });
+
+    var instance = $input.autocomplete("instance");
+    if (instance) {
+        instance._renderItem = function (ul, item) {
+            return $("<li>")
+                .append("<div>" + item.label + "</div>")
+                .appendTo(ul);
+        };
+    }
 }
 
 // Remove a course row

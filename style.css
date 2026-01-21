@@ -1,1 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
+:root {
+    --primary-color: #003366;
+    --accent-color: #FFD700;
+    --bg-gradient: linear-gradient(135deg, #001a33 0%, #003366 100%);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 30px;
+    transition: var(--transition);
+}
+
+/* Navigation */
+.nav-pills {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 10px 25px;
+    border-radius: 50px;
+    transition: var(--transition);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: var(--accent-color) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--accent-color);
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #ffffff, #FFD700);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Table Design */
+.table-container {
+    overflow-x: auto;
+    border-radius: 15px;
+}
+
+.table {
+    width: 100%;
+    color: var(--text-color) !important;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+.table th {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 15px;
+}
+
+.table td {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: var(--transition);
+}
+
+.table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.01);
+}
+
+.table td:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.table td:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+/* Form Controls */
+.form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 10px 15px !important;
+    transition: var(--transition) !important;
+    appearance: none;
+    /* Custom arrow support */
+}
+
+/* Ensure dropdown options are readable on all systems */
+.form-control option {
+    background: #001a33 !important;
+    color: white !important;
+}
+
+.form-control:focus {
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.6) !important;
+    border-color: var(--accent-color) !important;
+    outline: none !important;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background: #e6c200;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid var(--glass-border);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-danger {
+    background: #ff4d4d;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #ff3333;
+}
+
+/* Autocomplete Customization */
+.ui-autocomplete {
+    background: #000b1a !important;
+    /* Deep solid navy for contrast */
+    border: 2px solid var(--accent-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+    color: #ffffff !important;
+    padding: 8px !important;
+    z-index: 10001 !important;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.ui-menu-item {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0;
+}
+
+.ui-menu-item-wrapper {
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    transition: var(--transition);
+    border: 1px solid transparent !important;
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+.ui-menu-item-wrapper.ui-state-active,
+.ui-menu-item-wrapper:hover {
+    background: var(--accent-color) !important;
+    color: #000000 !important;
+    /* Pure black on gold for max contrast */
+    font-weight: 700;
+}
+
+/* Result Display */
+#result {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;
+    color: var(--accent-color);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Responsive Table - Keep horizontal on mobile */
+@media (max-width: 768px) {
+    .glass-card {
+        padding: 15px;
+        /* Reduce padding for more space */
+    }
+
+    .table th,
+    .table td {
+        padding: 10px 8px;
+        /* Compact padding */
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        padding: 8px 10px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+
+    #result {
+        font-size: 1.5rem;
+    }
+}
+
+/* Remove Button */
+.btn-remove {
+    background: rgba(255, 77, 77, 0.2);
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-remove:hover {
+    background: #ff4d4d;
+    color: white;
+    transform: rotate(90deg);
+}

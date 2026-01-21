@@ -1,56 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About - UPNG GPA Calculator</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
-  <style>
-    body { padding: 20px; font-family: Arial, sans-serif; }
-    .container { max-width: 800px; margin: auto; }
-    .header { text-align: center; margin-bottom: 30px; }
-    h1 { color: #0d6efd; }
-    p { font-size: 16px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | UPNG GPA Calculator</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Styles -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <div class="container">
-    <div class="header">
+    <header class="header">
       <h1>About This Calculator</h1>
-      <p>A tool to help students of the University of Papua New Guinea calculate their GPA and CGPA with accuracy and ease.</p>
-    </div>
+      <p>Empowering UPNG students with accurate academic tools.</p>
+    </header>
 
-    <h4>Features</h4>
-    <p>
-      The UPNG GPA Calculator is designed to offer a user-friendly and efficient solution for calculating both semester-based GPA and cumulative CGPA. It is built specifically for students at the University of Papua New Guinea, the calculator simplifies what is traditionally a tedious and error-prone task.
-    </p>
-    <p>
-      For GPA calculations, users can input or search and select course codes or course names. Course credit values are automatically added for courses selected. Users then select grades received for a specific semester. Correct grade points will be automatically calculated. The calculator then computes the Grade Point Average using UPNG’s official grading formula. The GPA is computed using a weighted average based on the credit values assigned to each course.
-    </p>
-    <p>
-      For CGPA, the tool supports cumulative calculations across multiple semesters or academic years. It correctly handles repeat courses by selecting the highest grade achieved for any repeated course and excluding lower attempts from the computation. This ensures alignment with university policy and gives students an accurate reflection of their standing.
-    </p>
-    <p>
-      The application is mobile-responsive, ensuring accessibility across devices. It features an autocomplete course list drawn from official UPNG course data to speed up data entry and reduce errors. Designed to be lightweight and fast, it works seamlessly even in low-connectivity environments.
-    </p>
-    <p>
-      The method for GPA/CGPA calculation here are the same as those used in the official UPNG student systems. 
-    </p>
-    
-   <p> 
-    Disclaimer: This tool is provided for personal use only and is not an official UPNG system. Use it only for verification of transcript GPA/CGPA. Please verify final GPA/CGPA results with your School or Student Administration. 
-   </p>
+    <nav class="nav-pills">
+      <a href="index.html" class="nav-link">GPA Calculator</a>
+      <a href="cgpa.html" class="nav-link">CGPA Calculator</a>
+      <a href="about.html" class="nav-link active">About</a>
+    </nav>
 
+    <main class="glass-card">
+      <h4 style="color: var(--accent-color);" class="mb-4">Features & Purpose</h4>
+      <div class="text-muted" style="line-height: 1.8;">
+        <p>
+          The UPNG GPA Calculator is a user-centric solution designed to simplify grade point calculations for students
+          at the University of Papua New Guinea. What was once a tedious manual process is now instant and accurate.
+        </p>
+        <p>
+          <strong>Key Features:</strong>
+        </p>
+        <ul class="mb-4">
+          <li><strong>Integrated Course Search:</strong> Autocomplete feature populated with official UPNG course data.
+          </li>
+          <li><strong>Automatic Credit Fetching:</strong> Select a course, and the correct credit values are applied
+            instantly.</li>
+          <li><strong>CGPA Repeat Logic:</strong> Automatically handles repeated courses by selecting the highest grade
+            achieved, per university policy.</li>
+          <li><strong>Mobile Optimized:</strong> A responsive design that works perfectly on phones and tablets.</li>
+          <li><strong>Offline Capability:</strong> Built to be lightweight and fast, even in low-connectivity
+            environments.</li>
+        </ul>
+        <p>
+          The calculations performed here align with the official formulas used by the UPNG student system. However,
+          this is an unofficial tool and should be used for personal tracking and verification only.
+        </p>
+      </div>
+    </main>
 
-    <p>
-      Developed by <strong>Neo Malesa</strong> <br />
-      ICT Division, University of Papua New Guinea<br />
-      
-      Feedback and suggestions are welcome. Email: <a href="mailto:n30dyn4m1c@gmail.com">n30dyn4m1c@gmail.com</a>, <a href="mailto:nmalesa@upng.ac.pg">nmalesa@upng.ac.pg</a>
-    </p>
+    <section class="glass-card">
+      <h4 style="color: var(--accent-color);" class="mb-4">Developer Information</h4>
+      <div class="d-flex align-items-center gap-4 flex-wrap">
+        <div
+          style="background: rgba(255,255,255,0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent-color); border: 2px solid var(--glass-border);">
+          NM
+        </div>
+        <div>
+          <h5 class="mb-1">Neo Malesa</h5>
+          <p class="mb-2 text-muted">ICT Division, University of Papua New Guinea</p>
+          <div class="d-flex gap-3">
+            <a href="mailto:n30dyn4m1c@gmail.com" class="btn btn-secondary btn-sm" style="padding: 5px 15px;">Email
+              Support</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <p><a href="index.html">Back to GPA Calculator</a></p>
-    <p><a href="cgpa.html">Back to CGPA Calculator</a></p>
+    <footer class="text-center mt-5 mb-4">
+      <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+        Developed by <strong>Neo Malesa</strong><br>
+        <small>Last updated: Jan 2026</small>
+      </p>
+    </footer>
   </div>
 </body>
+
 </html>
