@@ -31,7 +31,7 @@
       <p>Calculate your Cumulative GPA across semesters.</p>
     </header>
 
-    <nav class="nav-pills">
+    <nav class="nav-pills" role="navigation" aria-label="Calculator navigation">
       <a href="index.html" class="nav-link">GPA Calculator</a>
       <a href="cgpa.html" class="nav-link active">CGPA Calculator</a>
       <a href="about.html" class="nav-link">About</a>
@@ -39,7 +39,7 @@
 
     <main class="glass-card">
       <div class="table-container">
-        <table id="coursesTable" class="table">
+        <table id="coursesTable" class="table" role="table" aria-label="Course list">
           <thead>
             <tr>
               <th style="width: 50%;">Course Code/Name</th>
@@ -56,16 +56,16 @@
       </div>
 
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
-        <button onclick="addCourseRow()" class="btn btn-secondary">
+        <button id="addCourseBtn" class="btn btn-secondary" aria-label="Add a new course row">
           Add Course
         </button>
         <div class="d-flex gap-2">
-          <button onclick="calculateCGPA()" class="btn btn-primary">Calculate CGPA</button>
-          <button onclick="clearAllCourses()" class="btn btn-danger">Clear All</button>
+          <button id="calculateBtn" class="btn btn-primary" aria-label="Calculate CGPA">Calculate CGPA</button>
+          <button id="clearBtn" class="btn btn-danger" aria-label="Clear all courses">Clear All</button>
         </div>
       </div>
 
-      <div id="result"></div>
+      <div id="result" aria-live="polite" role="status"></div>
     </main>
 
     <section class="glass-card">
@@ -100,6 +100,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="courses.js"></script>
+  <script src="shared.js"></script>
   <script src="cgpa.js" defer></script>
 </body>
 
