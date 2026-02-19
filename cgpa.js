@@ -35,7 +35,9 @@ const CgpaCalculator = (() => {
         });
 
         var cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-        document.getElementById('result').textContent = 'Your CGPA is: ' + cgpa;
+        document.getElementById('result').innerHTML =
+            '<div class="result-panel"><div class="result-label">Cumulative GPA</div>' +
+            '<div class="result-value">' + cgpa + '</div></div>';
     }
 
     function clear() {
