@@ -5399,4 +5399,150 @@ var globalCourseData = [
     "name": "Bachelor of Medical Science Research Project",
     "credits": 18
   }
+,
+  {
+    "number": "2.24701",
+    "name": "Human Anatomy I",
+    "credits": 3
+  },
+  {
+    "number": "2.24702",
+    "name": "Human Anatomy II",
+    "credits": 3
+  },
+  {
+    "number": "2.24703",
+    "name": "Biochemistry I",
+    "credits": 3
+  },
+  {
+    "number": "2.24704",
+    "name": "Biochemistry II",
+    "credits": 3
+  },
+  {
+    "number": "2.24705",
+    "name": "Human Physiology I",
+    "credits": 3
+  },
+  {
+    "number": "2.24706",
+    "name": "Human Physiology II",
+    "credits": 3
+  },
+  {
+    "number": "2.24707",
+    "name": "Molecular Biology I",
+    "credits": 3
+  },
+  {
+    "number": "2.24708",
+    "name": "Molecular Biology II",
+    "credits": 3
+  },
+  {
+    "number": "2.44651",
+    "name": "Introduction to Biostatistics",
+    "credits": 3
+  },
+  {
+    "number": "2.44652",
+    "name": "Introduction to Epidemiology",
+    "credits": 3
+  },
+  {
+    "number": "4.61101",
+    "name": "Advanced Technical Writing",
+    "credits": 5
+  },
+  {
+    "number": "4.61102",
+    "name": "Rhetoric and Writing in Professional Communities",
+    "credits": 5
+  },
+  {
+    "number": "4.61103",
+    "name": "Non Fiction Writing",
+    "credits": 5
+  },
+  {
+    "number": "4.61104",
+    "name": "Critical Writing",
+    "credits": 5
+  },
+  {
+    "number": "4.61105",
+    "name": "Project Management and Documentation",
+    "credits": 5
+  },
+  {
+    "number": "4.61106",
+    "name": "Proposal Writing",
+    "credits": 5
+  },
+  {
+    "number": "4.61107",
+    "name": "Professional Editing",
+    "credits": 5
+  },
+  {
+    "number": "4.61108",
+    "name": "Imagining Papua New Guinea Through Australian Eyes",
+    "credits": 5
+  },
+  {
+    "number": "2.34701",
+    "name": "Systemic pharmacology I",
+    "credits": 3
+  },
+  {
+    "number": "2.34702",
+    "name": "Systemic Pharmacology II",
+    "credits": 3
+  },
+  {
+    "number": "2.34703",
+    "name": "Clinical Biochemistry I",
+    "credits": 3
+  },
+  {
+    "number": "2.34704",
+    "name": "Clinical Biochemistry II",
+    "credits": 3
+  },
+  {
+    "number": "2.34705",
+    "name": "Clinical Anatomy",
+    "credits": 3
+  },
+  {
+    "number": "2.34706",
+    "name": "Human Nutrition",
+    "credits": 3
+  },
+  {
+    "number": "2.34707",
+    "name": "Quality Assurance & Lab Safety",
+    "credits": 3
+  },
+  {
+    "number": "2.34708",
+    "name": "Applied Physiology",
+    "credits": 3
+  },
+  {
+    "number": "4.11301",
+    "name": "Introduction to Geography I",
+    "credits": 3
+  },
+  {
+    "number": "4.11302",
+    "name": "Introduction to Geography II",
+    "credits": 3
+  },
+  {
+    "number": "1.20601",
+    "name": "Introduction to Environmental Science and Sustainable Development I",
+    "credits": 3
+  }
 ];
