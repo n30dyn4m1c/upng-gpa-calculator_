@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPA Calculator | UPNG</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="style.css">
 
@@ -25,21 +22,27 @@
 </head>
 
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>UPNG GPA Calculator</h1>
-            <p>Calculate your semester GPA with precision and ease.</p>
-        </header>
+    <header class="site-header">
+        <div class="header-inner">
+            <span class="header-brand"><span class="brand-accent">UPNG</span> GPA Calculator</span>
+            <nav class="site-nav" role="navigation" aria-label="Calculator navigation">
+                <a href="index.html" class="nav-link active">GPA Calculator</a>
+                <a href="cgpa.html" class="nav-link">CGPA Calculator</a>
+                <a href="about.html" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
 
-        <nav class="nav-pills" role="navigation" aria-label="Calculator navigation">
-            <a href="index.html" class="nav-link active">GPA Calculator</a>
-            <a href="cgpa.html" class="nav-link">CGPA Calculator</a>
-            <a href="about.html" class="nav-link">About</a>
-        </nav>
+    <div class="page-wrap">
+        <div class="page-heading">
+            <h1>Semester GPA</h1>
+            <p>Calculate your semester grade point average.</p>
+        </div>
 
-        <main class="glass-card">
-            <div class="table-container">
-                <table id="coursesTable" class="table" role="table" aria-label="Course list">
+        <main class="card">
+            <div class="card-header">Course Entry</div>
+            <div class="transcript-wrap">
+                <table id="coursesTable" class="transcript-table" role="table" aria-label="Course list">
                     <thead>
                         <tr>
                             <th style="width: 50%;">Course Code/Name</th>
@@ -55,48 +58,40 @@
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
-                <button id="addCourseBtn" class="btn btn-secondary" aria-label="Add a new course row">
-                    <i class="bi bi-plus-lg"></i> Add Course
-                </button>
-                <div class="d-flex gap-2">
-                    <button id="calculateBtn" class="btn btn-primary" aria-label="Calculate GPA">Calculate GPA</button>
-                    <button id="clearBtn" class="btn btn-danger" aria-label="Clear all courses">Clear All</button>
+            <div class="action-bar">
+                <button id="addCourseBtn" class="btn btn-add" aria-label="Add a new course row">+ Add Course</button>
+                <div class="action-right">
+                    <button id="calculateBtn" class="btn btn-calculate" aria-label="Calculate GPA">Calculate GPA</button>
+                    <button id="clearBtn" class="btn btn-clear" aria-label="Clear all courses">Clear All</button>
                 </div>
             </div>
 
             <div id="result" aria-live="polite" role="status"></div>
         </main>
 
-        <section class="glass-card">
-            <h4 class="mb-4" style="color: var(--accent-color);">GPA Calculation Notes</h4>
-            <ul class="list-unstyled">
-                <li class="mb-3">
-                    <strong style="color: white;">Formula:</strong>
-                    <div class="mt-2 text-center"
-                        style="font-size: 1.2rem; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
-                        \( GPA = \frac{\sum (\text{Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)
-                    </div>
-                </li>
-                <li>
-                    <strong style="color: white;">Grading Scale:</strong>
-                    <div class="d-flex flex-wrap gap-2 mt-2">
-                        <span class="badge bg-light text-dark">HD = 5</span>
-                        <span class="badge bg-light text-dark">DI = 4</span>
-                        <span class="badge bg-light text-dark">CR = 3</span>
-                        <span class="badge bg-light text-dark">PA = 2</span>
-                        <span class="badge bg-light text-dark">CP = 1</span>
-                        <span class="badge bg-light text-dark">F = 0</span>
-                    </div>
-                </li>
-            </ul>
+        <section class="card">
+            <div class="card-header">GPA Calculation Notes</div>
+            <div class="card-body">
+                <h4>Formula</h4>
+                <div class="formula-box">
+                    \( GPA = \frac{\sum (\text{Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)
+                </div>
+                <h4>Grading Scale</h4>
+                <div class="grade-badges">
+                    <span class="badge">HD = 5</span>
+                    <span class="badge">DI = 4</span>
+                    <span class="badge">CR = 3</span>
+                    <span class="badge">PA = 2</span>
+                    <span class="badge">CP = 1</span>
+                    <span class="badge">F = 0</span>
+                </div>
+            </div>
         </section>
 
-        <footer class="text-center mt-5 mb-4">
-            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+        <footer class="site-footer">
+            <p>
                 Disclaimer: This tool is for personal use and is not an official UPNG system.<br>
-                Developed by <strong>Neo Malesa</strong> • <a href="mailto:n30dyn4m1c@gmail.com"
-                    class="text-white">n30dyn4m1c@gmail.com</a><br>
+                Developed by <strong>Neo Malesa</strong> &bull; <a href="mailto:n30dyn4m1c@gmail.com">n30dyn4m1c@gmail.com</a><br>
                 <small>Last updated: Jan 2026</small>
             </p>
         </footer>

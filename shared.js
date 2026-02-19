@@ -38,14 +38,14 @@ const GpaApp = (() => {
         var cellPoints = row.insertCell(3);
         var cellAction = row.insertCell(4);
 
-        cellIndex.innerHTML = '<input type="text" class="form-control course-input" placeholder="Enter course code or name">';
+        cellIndex.innerHTML = '<input type="text" class="course-input" placeholder="Enter course code or name">';
         cellIndex.setAttribute('data-label', 'Course');
 
-        cellCredits.innerHTML = '<div class="credits-input text-center" style="font-weight: 600;">-</div>';
+        cellCredits.innerHTML = '<div class="credits-input">-</div>';
         cellCredits.setAttribute('data-label', 'Credits');
 
         cellGrade.innerHTML =
-            '<select class="form-control grade-select">' +
+            '<select class="grade-select">' +
                 '<option value="">Select</option>' +
                 '<option value="5">HD</option>' +
                 '<option value="4">DI</option>' +
@@ -56,7 +56,7 @@ const GpaApp = (() => {
             '</select>';
         cellGrade.setAttribute('data-label', 'Grade');
 
-        cellPoints.innerHTML = '<div class="grade-points text-center" style="font-weight: 600;">-</div>';
+        cellPoints.innerHTML = '<div class="grade-points">-</div>';
         cellPoints.setAttribute('data-label', 'GP');
 
         cellAction.innerHTML = '<button class="btn-remove" title="Remove Course">&times;</button>';

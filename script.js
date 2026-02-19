@@ -36,7 +36,9 @@ const GpaCalculator = (() => {
         });
 
         var gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-        document.getElementById('result').textContent = 'Your GPA is: ' + gpa;
+        document.getElementById('result').innerHTML =
+            '<div class="result-panel"><div class="result-label">Semester GPA</div>' +
+            '<div class="result-value">' + gpa + '</div></div>';
     }
 
     function clear() {

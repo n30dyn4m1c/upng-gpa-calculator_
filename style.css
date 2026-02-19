@@ -1,217 +1,346 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
 :root {
-    --primary-color: #003366;
-    --accent-color: #FFD700;
-    --bg-gradient: linear-gradient(135deg, #001a33 0%, #003366 100%);
-    --glass-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
-    --text-color: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.7);
-    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --blue: #003366;
+    --gold: #FFD700;
+    --page-bg: #f4f6f9;
+    --card-bg: #ffffff;
+    --text: #1c2b3a;
+    --text-muted: #718096;
+    --border: #e2e8f0;
+    --stripe: #f8fafc;
+    --hover-row: #eff6ff;
+    --red: #e53e3e;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    padding: 20px;
+    padding: 0;
     font-family: 'Outfit', sans-serif;
-    background: var(--bg-gradient);
-    background-attachment: fixed;
-    color: var(--text-color);
+    background: var(--page-bg);
+    color: var(--text);
     min-height: 100vh;
 }
 
-.container {
+/* ── Site Header ─────────────────────────────────────── */
+.site-header {
+    background: var(--blue);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.header-inner {
     max-width: 900px;
-    margin: auto;
-}
-
-/* Glassmorphism Card */
-.glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: var(--card-shadow);
-    margin-bottom: 30px;
-    transition: var(--transition);
-}
-
-/* Navigation */
-.nav-pills {
+    margin: 0 auto;
+    padding: 0 20px;
     display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+}
+
+.header-brand {
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+}
+
+.brand-accent {
+    color: var(--gold);
+}
+
+.site-nav {
+    display: flex;
+    gap: 4px;
 }
 
 .nav-link {
-    color: var(--text-color) !important;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    padding: 10px 25px;
-    border-radius: 50px;
-    transition: var(--transition);
+    color: rgba(255, 255, 255, 0.82);
+    padding: 6px 14px;
+    border-radius: 6px;
     text-decoration: none;
+    font-size: 0.88rem;
     font-weight: 600;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
 }
 
 .nav-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
 }
 
 .nav-link.active {
-    background: var(--accent-color) !important;
-    color: var(--primary-color) !important;
-    border-color: var(--accent-color);
-}
-
-/* Header */
-.header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.header h1 {
+    background: var(--gold);
+    color: var(--blue);
     font-weight: 700;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    background: linear-gradient(to right, #ffffff, #FFD700);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
-.header p {
+/* ── Page Wrap ───────────────────────────────────────── */
+.page-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+}
+
+/* ── Page Heading ────────────────────────────────────── */
+.page-heading {
+    border-left: 4px solid var(--gold);
+    padding-left: 14px;
+    margin-bottom: 24px;
+}
+
+.page-heading h1 {
+    margin: 0 0 4px;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.page-heading p {
+    margin: 0;
     color: var(--text-muted);
-    font-size: 1.1rem;
+    font-size: 0.93rem;
 }
 
-/* Table Design */
-.table-container {
-    overflow-x: auto;
-    border-radius: 15px;
+/* ── Cards ───────────────────────────────────────────── */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    margin-bottom: 24px;
+    overflow: hidden;
 }
 
-.table {
-    width: 100%;
-    color: var(--text-color) !important;
-    border-collapse: separate;
-    border-spacing: 0 8px;
-}
-
-.table th {
-    background: transparent;
-    border: none;
-    font-weight: 600;
-    color: var(--accent-color);
+.card-header {
+    background: var(--blue);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    font-size: 0.85rem;
-    padding: 15px;
+    padding: 9px 20px;
 }
 
-.table td {
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    padding: 15px;
+.card-body {
+    padding: 20px;
+}
+
+.card-body h4 {
+    margin: 0 0 14px;
+    color: var(--blue);
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+/* ── Transcript Table ────────────────────────────────── */
+.transcript-wrap {
+    overflow-x: auto;
+}
+
+.transcript-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+}
+
+.transcript-table thead tr {
+    background: var(--blue);
+}
+
+.transcript-table th {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 11px 14px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.transcript-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+}
+
+.transcript-table tbody tr:nth-child(even) {
+    background: var(--stripe);
+}
+
+.transcript-table tbody tr:hover {
+    background: var(--hover-row);
+}
+
+.transcript-table td {
+    padding: 9px 14px;
     vertical-align: middle;
 }
 
-.table tbody tr {
-    transition: var(--transition);
+/* ── Form Controls ───────────────────────────────────── */
+.course-input,
+.grade-select {
+    width: 100%;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(1.01);
+.course-input:focus,
+.grade-select:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
+    outline: none;
 }
 
-.table td:first-child {
-    border-radius: 12px 0 0 12px;
+.grade-select option {
+    background: #fff;
+    color: var(--text);
 }
 
-.table td:last-child {
-    border-radius: 0 12px 12px 0;
-}
-
-/* Form Controls */
-.form-control {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid var(--glass-border) !important;
-    color: white !important;
-    border-radius: 10px !important;
-    padding: 10px 15px !important;
-    transition: var(--transition) !important;
-    appearance: none;
-    /* Custom arrow support */
-}
-
-/* Ensure dropdown options are readable on all systems */
-.form-control option {
-    background: #001a33 !important;
-    color: white !important;
-}
-
-.form-control:focus {
-    background: #ffffff !important;
-    color: #000000 !important;
-    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.6) !important;
-    border-color: var(--accent-color) !important;
-    outline: none !important;
-}
-
-/* Buttons */
-.btn {
-    border-radius: 12px;
-    padding: 12px 25px;
+.credits-input,
+.grade-points {
     font-weight: 600;
-    transition: var(--transition);
+    color: var(--text-muted);
+    text-align: center;
+    display: block;
+}
+
+/* ── Action Bar ──────────────────────────────────────── */
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.action-right {
+    display: flex;
+    gap: 8px;
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn {
+    border-radius: 7px;
+    padding: 9px 20px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
     border: none;
+    white-space: nowrap;
 }
 
-.btn-primary {
-    background: var(--accent-color);
-    color: var(--primary-color);
+.btn-add {
+    background: #fff;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
 }
 
-.btn-primary:hover {
-    background: #e6c200;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+.btn-add:hover {
+    background: #eff6ff;
 }
 
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid var(--glass-border);
+.btn-calculate {
+    background: var(--blue);
+    color: #fff;
 }
 
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
+.btn-calculate:hover {
+    background: #002450;
+    box-shadow: 0 3px 10px rgba(0, 51, 102, 0.25);
 }
 
-.btn-danger {
-    background: #ff4d4d;
-    color: white;
+.btn-clear {
+    background: #fff;
+    color: var(--red);
+    border: 1.5px solid #fecaca;
 }
 
-.btn-danger:hover {
-    background: #ff3333;
+.btn-clear:hover {
+    background: #fff5f5;
 }
 
-/* Autocomplete Customization */
+/* ── Remove Row Button ───────────────────────────────── */
+.btn-remove {
+    background: transparent;
+    color: var(--red);
+    border: 1px solid #fecaca;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    padding: 0;
+}
+
+.btn-remove:hover {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+}
+
+/* ── Result Display ──────────────────────────────────── */
+#result {
+    margin: 0;
+    padding: 0;
+}
+
+.result-panel {
+    background: var(--blue);
+    color: #fff;
+    text-align: center;
+    padding: 28px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.result-value {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+}
+
+/* ── Autocomplete ────────────────────────────────────── */
 .ui-autocomplete {
-    background: #000b1a !important;
-    /* Deep solid navy for contrast */
-    border: 2px solid var(--accent-color) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
-    color: #ffffff !important;
-    padding: 8px !important;
+    background: #fff !important;
+    border: 1.5px solid var(--border) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    color: var(--text) !important;
+    padding: 6px !important;
     z-index: 10001 !important;
     max-height: 300px;
     overflow-y: auto;
@@ -220,82 +349,238 @@ body {
 .ui-menu-item {
     list-style: none;
     padding: 0;
-    margin: 4px 0;
+    margin: 2px 0;
 }
 
 .ui-menu-item-wrapper {
-    padding: 10px 15px !important;
-    border-radius: 8px !important;
-    transition: var(--transition);
-    border: 1px solid transparent !important;
-    color: #ffffff !important;
+    padding: 9px 12px !important;
+    border-radius: 6px !important;
+    color: var(--text) !important;
     cursor: pointer;
+    font-size: 0.88rem;
+    border: 1px solid transparent !important;
+    transition: background 0.12s;
 }
 
 .ui-menu-item-wrapper.ui-state-active,
 .ui-menu-item-wrapper:hover {
-    background: var(--accent-color) !important;
-    color: #000000 !important;
-    /* Pure black on gold for max contrast */
-    font-weight: 700;
+    background: var(--blue) !important;
+    color: #fff !important;
+    font-weight: 600;
 }
 
-/* Result Display */
-#result {
-    font-size: 2rem;
-    font-weight: 700;
+/* ── Notes / Formula Section ─────────────────────────── */
+.formula-box {
+    background: var(--stripe);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
     text-align: center;
-    margin-top: 30px;
-    color: var(--accent-color);
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    font-size: 1.05rem;
+    margin: 10px 0 18px;
 }
 
-/* Responsive Table - Keep horizontal on mobile */
-@media (max-width: 768px) {
-    .glass-card {
-        padding: 15px;
-        /* Reduce padding for more space */
-    }
-
-    .table th,
-    .table td {
-        padding: 10px 8px;
-        /* Compact padding */
-        font-size: 0.8rem;
-    }
-
-    .form-control {
-        padding: 8px 10px !important;
-        font-size: 0.85rem !important;
-    }
-
-    .btn {
-        padding: 10px 15px;
-        font-size: 0.85rem;
-    }
-
-    #result {
-        font-size: 1.5rem;
-    }
+.grade-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
 }
 
-/* Remove Button */
-.btn-remove {
-    background: rgba(255, 77, 77, 0.2);
-    color: #ff4d4d;
-    border: 1px solid rgba(255, 77, 77, 0.3);
-    width: 35px;
-    height: 35px;
-    border-radius: 10px;
+.badge {
+    background: var(--stripe);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.83rem;
+    font-weight: 600;
+}
+
+/* ── About Page: Developer Info ──────────────────────── */
+.dev-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.dev-avatar {
+    background: var(--stripe);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--blue);
+    border: 2px solid var(--border);
+    flex-shrink: 0;
 }
 
-.btn-remove:hover {
-    background: #ff4d4d;
-    color: white;
-    transform: rotate(90deg);
+.btn-email {
+    display: inline-block;
+    padding: 7px 18px;
+    border-radius: 7px;
+    background: #fff;
+    color: var(--blue);
+    border: 1.5px solid var(--blue);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+}
+
+.btn-email:hover {
+    background: #eff6ff;
+}
+
+/* ── Site Footer ─────────────────────────────────────── */
+.site-footer {
+    text-align: center;
+    padding: 16px 0 8px;
+    font-size: 0.865rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.site-footer a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ── Mobile: card-per-row layout (≤600px) ────────────── */
+@media (max-width: 600px) {
+    .header-inner {
+        height: auto;
+        padding: 10px 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .site-nav {
+        gap: 4px;
+    }
+
+    .nav-link {
+        padding: 5px 11px;
+        font-size: 0.82rem;
+    }
+
+    .page-wrap {
+        padding: 14px 10px 36px;
+    }
+
+    /* Hide thead — labels come from data-label pseudo-elements */
+    .transcript-table thead {
+        display: none;
+    }
+
+    /* Each row becomes a card */
+    .transcript-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin: 8px 10px;
+        padding: 0;
+        background: var(--card-bg) !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .transcript-table tbody tr:hover {
+        background: var(--hover-row) !important;
+    }
+
+    /* All cells block by default, override below */
+    .transcript-table td {
+        display: block;
+        padding: 8px 12px;
+        border: none;
+    }
+
+    /* Course input — full width, separated by border */
+    .transcript-table td[data-label="Course"] {
+        flex: 0 0 100%;
+        border-bottom: 1px solid var(--border);
+        padding: 10px 12px;
+    }
+
+    /* Bottom row cells */
+    .transcript-table td[data-label="Credits"] {
+        flex: 0 0 auto;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .transcript-table td[data-label="Credits"]::before {
+        content: "Cr:";
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .transcript-table td[data-label="Grade"] {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .transcript-table td[data-label="GP"] {
+        flex: 0 0 auto;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .transcript-table td[data-label="GP"]::before {
+        content: "GP:";
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    .transcript-table td[data-label="Action"] {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+    }
+
+    /* Remove overflow clip so card borders show */
+    .transcript-wrap {
+        overflow-x: visible;
+    }
+
+    /* Stack action bar buttons full-width */
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px 14px;
+    }
+
+    .action-right {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .result-value {
+        font-size: 2.4rem;
+    }
 }
