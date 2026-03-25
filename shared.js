@@ -1,42 +1,18 @@
-const GpaApp = (() => {
-    let courses = [];
+import { courses } from './courses.js';
+import { gradingScale } from './gradingScale.js';
 
-    function init() {
-        fetchCourses();
-    }
-
-    function fetchCourses() {
-        try {
-            if (typeof globalCourseData !== 'undefined') {
-                courses = globalCourseData;
-                return;
-            }
-
-            const url = `courses.json?v=${new Date().getTime()}`;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    courses = data;
-                })
-                .catch(error => {
-                    console.error("Failed to load courses:", error);
-                    courses = [];
-                });
-        } catch (error) {
-            console.error("Failed to load courses:", error);
-            courses = [];
-        }
-    }
+export const GpaApp = (() => {
+    let allCourses = courses;
 
     function addCourseRow(options) {
         options = options || {};
-        var tbody = document.getElementById('coursesTable').getElementsByTagName('tbody')[0];
-        var row = tbody.insertRow();
-        var cellIndex = row.insertCell(0);
-        var cellCredits = row.insertCell(1);
-        var cellGrade = row.insertCell(2);
-        var cellPoints = row.insertCell(3);
-        var cellAction = row.insertCell(4);
+        const tbody = document.getElementById('coursesTable').getElementsByTagName('tbody')[0];
+        const row = tbody.insertRow();
+        const cellIndex = row.insertCell(0);
+        const cellCredits = row.insertCell(1);
+        const cellGrade = row.insertCell(2);
+        const cellPoints = row.insertCell(3);
+        const cellAction = row.insertCell(4);
 
         cellIndex.innerHTML = '<input type="text" class="course-input" placeholder="Enter course code or name">';
         cellIndex.setAttribute('data-label', 'Course');
@@ -44,16 +20,13 @@ const GpaApp = (() => {
         cellCredits.innerHTML = '<div class="credits-input">-</div>';
         cellCredits.setAttribute('data-label', 'Credits');
 
-        cellGrade.innerHTML =
-            '<select class="grade-select">' +
-                '<option value="">Select</option>' +
-                '<option value="5">HD</option>' +
-                '<option value="4">DI</option>' +
-                '<option value="3">CR</option>' +
-                '<option value="2">PA</option>' +
-                '<option value="1">CP</option>' +
-                '<option value="0">F</option>' +
-            '</select>';
+        // Dynamically generate grade options
+        let gradeOptions = '<option value="">Select</option>';
+        gradingScale.forEach(g => {
+            gradeOptions += `<option value="${g.points}">${g.grade}</option>`;
+        });
+
+        cellGrade.innerHTML = `<select class="grade-select">${gradeOptions}</select>`;
         cellGrade.setAttribute('data-label', 'Grade');
 
         cellPoints.innerHTML = '<div class="grade-points">-</div>';
@@ -62,28 +35,28 @@ const GpaApp = (() => {
         cellAction.innerHTML = '<button class="btn-remove" title="Remove Course">&times;</button>';
         cellAction.setAttribute('data-label', 'Action');
 
-        var gradeSelect = cellGrade.querySelector('.grade-select');
+        const gradeSelect = cellGrade.querySelector('.grade-select');
         gradeSelect.addEventListener('change', function () {
             updateGradePoints(this);
         });
 
-        var removeBtn = cellAction.querySelector('.btn-remove');
+        const removeBtn = cellAction.querySelector('.btn-remove');
         removeBtn.addEventListener('click', function () {
             removeCourseRow(this);
         });
 
-        var $input = $(cellIndex).find('input');
+        const $input = $(cellIndex).find('input');
 
         $input.autocomplete({
             minLength: 1,
             delay: 200,
             source: function (request, response) {
-                if (!courses || courses.length === 0) {
+                if (!allCourses || allCourses.length === 0) {
                     response([]);
                     return;
                 }
-                var term = request.term.toLowerCase();
-                var filtered = courses.filter(function (c) {
+                const term = request.term.toLowerCase();
+                const filtered = allCourses.filter(function (c) {
                     var num = String(c.number).toLowerCase();
                     var name = String(c.name).toLowerCase();
                     return num.includes(term) || name.includes(term);
@@ -110,7 +83,7 @@ const GpaApp = (() => {
             }
         });
 
-        var instance = $input.autocomplete("instance");
+        const instance = $input.autocomplete("instance");
         if (instance) {
             instance._renderItem = function (ul, item) {
                 return $("<li>")
@@ -121,13 +94,13 @@ const GpaApp = (() => {
     }
 
     function removeCourseRow(button) {
-        var row = button.closest('tr');
+        const row = button.closest('tr');
         row.parentNode.removeChild(row);
     }
 
     function updateGradePoints(select) {
-        var gradePoint = select.value;
-        var row = select.closest('tr');
+        const gradePoint = select.value;
+        const row = select.closest('tr');
         row.querySelector('.grade-points').textContent = gradePoint;
     }
 
@@ -148,9 +121,9 @@ const GpaApp = (() => {
     }
 
     function parseRow(row) {
-        var course = row.querySelector('.course-input').value.split(' - ')[0];
-        var credits = parseFloat(row.querySelector('.credits-input').textContent);
-        var points = parseFloat(row.querySelector('.grade-points').textContent);
+        const course = row.querySelector('.course-input').value.split(' - ')[0];
+        const credits = parseFloat(row.querySelector('.credits-input').textContent);
+        const points = parseFloat(row.querySelector('.grade-points').textContent);
 
         if (isNaN(credits) || isNaN(points)) {
             return null;
@@ -159,5 +132,5 @@ const GpaApp = (() => {
         return { course: course, credits: credits, points: points };
     }
 
-    return { init: init, addCourseRow: addCourseRow, removeCourseRow: removeCourseRow, updateGradePoints: updateGradePoints, clearAllCourses: clearAllCourses, getRows: getRows, parseRow: parseRow };
+    return { addCourseRow: addCourseRow, removeCourseRow: removeCourseRow, updateGradePoints: updateGradePoints, clearAllCourses: clearAllCourses, getRows: getRows, parseRow: parseRow };
 })();

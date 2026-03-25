@@ -17,7 +17,6 @@
             svg: { fontCache: 'global' }
         };
     </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
@@ -83,6 +82,14 @@
             </div>
         </section>
 
+        <section class="card">
+            <div class="card-header">Grading Scale</div>
+            <div class="card-body">
+                <div class="grade-badges" id="gradingScaleBadges">
+                </div>
+            </div>
+        </section>
+
         <footer class="site-footer">
             <p>
                 Disclaimer: Tool is still in testing phase. Not yet officially released. Only for personal use now.<br>
@@ -95,9 +102,22 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="courses.js"></script>
-    <script src="shared.js"></script>
-    <script src="cgpa.js" defer></script>
+
+    <script type="module">
+        import { gradingScale } from './gradingScale.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeBadgesContainer = document.getElementById('gradingScaleBadges');
+            if (gradeBadgesContainer) {
+                let badgesHtml = '';
+                gradingScale.forEach(g => {
+                    badgesHtml += `<span class="badge">${g.grade} = ${g.points}</span>`;
+                });
+                gradeBadgesContainer.innerHTML = badgesHtml;
+            }
+        });
+    </script>
+    <script type="module" src="cgpa.js"></script>
 </body>
 
 </html>

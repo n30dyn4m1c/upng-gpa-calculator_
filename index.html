@@ -17,7 +17,6 @@
             svg: { fontCache: 'global' }
         };
     </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
@@ -77,13 +76,7 @@
                     \( GPA = \frac{\sum (\text{Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)
                 </div>
                 <h4>Grading Scale</h4>
-                <div class="grade-badges">
-                    <span class="badge">HD = 5</span>
-                    <span class="badge">DI = 4</span>
-                    <span class="badge">CR = 3</span>
-                    <span class="badge">PA = 2</span>
-                    <span class="badge">CP = 1</span>
-                    <span class="badge">F = 0</span>
+                <div class="grade-badges" id="gradingScaleBadges">
                 </div>
             </div>
         </section>
@@ -100,9 +93,22 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="courses.js"></script>
-    <script src="shared.js"></script>
-    <script src="script.js" defer></script>
+
+    <script type="module">
+        import { gradingScale } from './gradingScale.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const gradeBadgesContainer = document.getElementById('gradingScaleBadges');
+            if (gradeBadgesContainer) {
+                let badgesHtml = '';
+                gradingScale.forEach(g => {
+                    badgesHtml += `<span class="badge">${g.grade} = ${g.points}</span>`;
+                });
+                gradeBadgesContainer.innerHTML = badgesHtml;
+            }
+        });
+    </script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

@@ -1,54 +1,55 @@
-const GpaCalculator = (() => {
-    const selectedCourses = new Set();
+import { GpaApp } from './shared.js';
+const $ = window.$ || jQuery;
 
-    function init() {
-        GpaApp.init();
-        document.getElementById('addCourseBtn').addEventListener('click', addCourse);
-        document.getElementById('calculateBtn').addEventListener('click', calculate);
-        document.getElementById('clearBtn').addEventListener('click', clear);
-    }
+const selectedCourses = new Set();
 
-    function addCourse() {
-        GpaApp.addCourseRow({
-            onSelect: function (input, ui) {
-                if (selectedCourses.has(ui.item.value)) {
-                    alert("You have already selected this course. You cannot repeat a course in the same semester or academic year.");
-                    $(input).val('');
-                } else {
-                    selectedCourses.add(ui.item.value);
-                    $(input).val(ui.item.label);
-                    $(input).closest('tr').find('.credits-input').text(ui.item.credits);
-                }
+function init() {
+    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    document.getElementById('clearBtn').addEventListener('click', clear);
+}
+
+function addCourse() {
+    GpaApp.addCourseRow({
+        onSelect: function (input, ui) {
+            if (selectedCourses.has(ui.item.value)) {
+                alert("You have already selected this course. You cannot repeat a course in the same semester or academic year.");
+                $(input).val('');
+            } else {
+                selectedCourses.add(ui.item.value);
+                $(input).val(ui.item.label);
+                $(input).closest('tr').find('.credits-input').text(ui.item.credits);
             }
-        });
-    }
+        }
+    });
+}
 
-    function calculate() {
-        var rows = GpaApp.getRows();
-        var totalPoints = 0, totalCredits = 0;
+function calculate() {
+    const rows = GpaApp.getRows();
+    let totalPoints = 0, totalCredits = 0;
 
-        rows.forEach(function (row) {
-            var data = GpaApp.parseRow(row);
-            if (data) {
-                totalPoints += data.credits * data.points;
-                totalCredits += data.credits;
-            }
-        });
+    rows.forEach(function (row) {
+        const data = GpaApp.parseRow(row);
+        if (data) {
+            totalPoints += data.credits * data.points;
+            totalCredits += data.credits;
+        }
+    });
 
-        var gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
-        document.getElementById('result').innerHTML =
-            '<div class="result-panel"><div class="result-label">Semester GPA</div>' +
-            '<div class="result-value">' + gpa + '</div></div>';
-    }
+    const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+    document.getElementById('result').innerHTML =
+        '<div class="result-panel"><div class="result-label">Semester GPA</div>' +
+        '<div class="result-value">' + gpa + '</div></div>';
+}
 
-    function clear() {
-        GpaApp.clearAllCourses({
-            onClear: function () {
-                selectedCourses.clear();
-            }
-        });
-    }
+function clear() {
+    GpaApp.clearAllCourses({
+        onClear: function () {
+            selectedCourses.clear();
+        }
+    });
+}
 
-    document.addEventListener('DOMContentLoaded', init);
-    return { addCourse: addCourse, calculate: calculate, clear: clear };
-})();
+document.addEventListener('DOMContentLoaded', init);
+// Export functions if they are needed by other modules, otherwise, no need to export.
+// For now, they are only used internally within this module.

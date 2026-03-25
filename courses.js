@@ -1,4 +1,4 @@
-var globalCourseData = [
+export const courses = [
   {
     "number": "1.10102",
     "name": "The Biology Century and PNG",
