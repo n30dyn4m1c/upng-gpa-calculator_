@@ -45,5 +45,8 @@ function clear() {
     GpaApp.clearAllCourses();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    GpaApp.init();
+    init();
+});
 

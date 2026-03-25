@@ -50,6 +50,9 @@ function clear() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    GpaApp.init();
+    init();
+});
 // Export functions if they are needed by other modules, otherwise, no need to export.
 // For now, they are only used internally within this module.

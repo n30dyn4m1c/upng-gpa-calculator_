@@ -1,8 +1,13 @@
-import { courses } from './courses.js';
 import { gradingScale } from './gradingScale.js';
 
 export const GpaApp = (() => {
-    let allCourses = courses;
+    let allCourses = [];
+
+    function init() {
+        return fetch('courses.json')
+            .then(r => r.json())
+            .then(data => { allCourses = data; });
+    }
 
     function addCourseRow(options) {
         options = options || {};
@@ -132,5 +137,5 @@ export const GpaApp = (() => {
         return { course: course, credits: credits, points: points };
     }
 
-    return { addCourseRow: addCourseRow, removeCourseRow: removeCourseRow, updateGradePoints: updateGradePoints, clearAllCourses: clearAllCourses, getRows: getRows, parseRow: parseRow };
+    return { init: init, addCourseRow: addCourseRow, removeCourseRow: removeCourseRow, updateGradePoints: updateGradePoints, clearAllCourses: clearAllCourses, getRows: getRows, parseRow: parseRow };
 })();

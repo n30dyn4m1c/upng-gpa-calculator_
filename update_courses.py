@@ -1,15 +1,15 @@
+import json
 import openpyxl
-import re
 
 XLSX_FILE = "CourseList.xlsx"
-COURSES_JS = "courses.js"
+COURSES_JSON = "courses.json"
 
-# --- Read existing courses from courses.js ---
-with open(COURSES_JS, "r") as f:
-    js_content = f.read()
+# --- Read existing courses from courses.json ---
+with open(COURSES_JSON, "r") as f:
+    existing_courses = json.load(f)
 
-existing_numbers = set(re.findall(r'"number":\s*"([^"]+)"', js_content))
-print(f"Existing courses in courses.js: {len(existing_numbers)}")
+existing_numbers = {c["number"] for c in existing_courses}
+print(f"Existing courses in courses.json: {len(existing_numbers)}")
 
 # --- Read courses from Excel ---
 wb = openpyxl.load_workbook(XLSX_FILE)
@@ -42,23 +42,11 @@ print(f"New courses to add: {len(new_courses)}")
 if not new_courses:
     print("Nothing to update.")
 else:
-    # Build JS entries for the new courses
-    new_entries = ""
-    for c in new_courses:
-        new_entries += f',\n  {{\n    "number": "{c["number"]}",\n    "name": "{c["name"]}",\n    "credits": {c["credits"]}\n  }}'
-
-    # Insert before the closing ]; of the array
-    updated = js_content.rstrip()
-    if updated.endswith("];"):
-        updated = updated[:-2] + new_entries + "\n];"
-    else:
-        print("ERROR: Could not find end of array in courses.js. Aborting.")
-        exit(1)
-
-    with open(COURSES_JS, "w") as f:
-        f.write(updated)
+    updated = existing_courses + new_courses
+    with open(COURSES_JSON, "w") as f:
+        json.dump(updated, f, indent=2)
 
     print("\nNew courses added:")
     for c in new_courses:
         print(f"  {c['number']} - {c['name']} ({c['credits']} credits)")
-    print(f"\ncourses.js updated successfully.")
+    print(f"\ncourses.json updated successfully.")

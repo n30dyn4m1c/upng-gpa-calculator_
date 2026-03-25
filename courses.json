@@ -1,4 +1,4 @@
-export const courses = [
+[
   {
     "number": "1.10102",
     "name": "The Biology Century and PNG",
@@ -5398,8 +5398,7 @@ export const courses = [
     "number": "2.44650",
     "name": "Bachelor of Medical Science Research Project",
     "credits": 18
-  }
-,
+  },
   {
     "number": "2.24701",
     "name": "Human Anatomy I",
@@ -5545,4 +5544,4 @@ export const courses = [
     "name": "Introduction to Environmental Science and Sustainable Development I",
     "credits": 3
   }
-];
+]
