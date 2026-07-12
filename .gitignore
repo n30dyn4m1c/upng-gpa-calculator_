@@ -3,3 +3,5 @@
 .vscode/
 .idea/
 *.xlsx
+__pycache__/
+node_modules/

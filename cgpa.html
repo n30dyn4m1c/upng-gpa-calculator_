@@ -5,19 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator | UPNG</title>
+    <meta name="description" content="Calculate your cumulative GPA (CGPA) across semesters using the University of Papua New Guinea (UPNG) grading scale. Repeat courses count only the highest grade.">
+    <meta name="theme-color" content="#003366">
+    <meta property="og:title" content="UPNG CGPA Calculator">
+    <meta property="og:description" content="Calculate your cumulative GPA across semesters using the UPNG grading scale.">
+    <meta property="og:type" content="website">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="style.css">
-
-    <script>
-        MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
-            svg: { fontCache: 'global' }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -47,7 +43,7 @@
                             <th style="width: 50%;">Course Code/Name</th>
                             <th style="width: 15%;">Credits</th>
                             <th style="width: 15%;">Grade</th>
-                            <th style="width: 10%;">GrPoints</th>
+                            <th style="width: 10%;">Points</th>
                             <th style="width: 10%;"></th>
                         </tr>
                     </thead>
@@ -72,12 +68,16 @@
             <div class="card-header">CGPA Calculation Notes</div>
             <div class="card-body">
                 <h4>Formula</h4>
-                <div class="formula-box">
-                    \( CGPA = \frac{\sum (\text{Highest Grade Points} \times \text{Credits})}{\sum (\text{Credits})} \)
+                <div class="formula-box" aria-label="CGPA formula">
+                    CGPA&nbsp;=
+                    <span class="fraction">
+                        <span class="numer">&Sigma; (Highest Grade Points &times; Credits)</span>
+                        <span class="denom">&Sigma; Credits</span>
+                    </span>
                 </div>
                 <h4>Repeat Course Policy</h4>
-                <p style="color: var(--text-muted); margin: 0; font-size: 0.92rem; line-height: 1.6;">
-                    Repeat courses are allowed, but the highest grade attained will be used for CGPA calculation.
+                <p class="note-text">
+                    Repeat courses are allowed, but only the highest grade attained is used in the CGPA calculation.
                 </p>
             </div>
         </section>
@@ -85,38 +85,19 @@
         <section class="card">
             <div class="card-header">Grading Scale</div>
             <div class="card-body">
-                <div class="grade-badges" id="gradingScaleBadges">
-                </div>
+                <div class="grade-badges" id="gradingScaleBadges"></div>
             </div>
         </section>
 
         <footer class="site-footer">
             <p>
-                Disclaimer: Tool is still in testing phase. Not yet officially released. Only for personal use now.<br>
+                Disclaimer: This tool is in testing and not yet officially released. For personal use only.<br>
                 <strong>$N30</strong> &bull; <a href="mailto:n30dyn4m1c+upnggpa@gmail.com">n30dyn4m1c+upnggpa@gmail.com</a><br>
-                <small>Last updated: Feb 2026</small>
+                <small>Last updated: Jul 2026</small>
             </p>
         </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-    <script type="module">
-        import { gradingScale } from './gradingScale.js';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const gradeBadgesContainer = document.getElementById('gradingScaleBadges');
-            if (gradeBadgesContainer) {
-                let badgesHtml = '';
-                gradingScale.forEach(g => {
-                    badgesHtml += `<span class="badge">${g.grade} = ${g.points}</span>`;
-                });
-                gradeBadgesContainer.innerHTML = badgesHtml;
-            }
-        });
-    </script>
     <script type="module" src="cgpa.js"></script>
 </body>
 

@@ -1,30 +1,20 @@
 import { GpaApp } from './shared.js';
-const $ = window.$ || jQuery;
-
-function init() {
-    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
-    document.getElementById('calculateBtn').addEventListener('click', calculate);
-    document.getElementById('clearBtn').addEventListener('click', clear);
-}
 
 function addCourse() {
-    GpaApp.addCourseRow({
-        onSelect: function (input, ui) {
-            $(input).val(ui.item.label);
-            $(input).closest('tr').find('.credits-input').text(ui.item.credits);
-        }
-    });
+    GpaApp.addCourseRow();
 }
 
 function calculate() {
     const rows = GpaApp.getRows();
     const courseMap = new Map();
 
-    rows.forEach(function (row) {
+    rows.forEach(function (row, index) {
         const data = GpaApp.parseRow(row);
         if (data) {
-            if (!courseMap.has(data.course) || data.points > courseMap.get(data.course).points) {
-                courseMap.set(data.course, { credits: data.credits, points: data.points });
+            // Rows without a course code can't be matched as repeats — count each one
+            const key = data.course || '__row' + index;
+            if (!courseMap.has(key) || data.points > courseMap.get(key).points) {
+                courseMap.set(key, { credits: data.credits, points: data.points });
             }
         }
     });
@@ -35,7 +25,12 @@ function calculate() {
         totalCredits += v.credits;
     });
 
-    const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+    if (totalCredits === 0) {
+        GpaApp.showNotice('Add at least one course with credits and a grade to calculate your CGPA.');
+        return;
+    }
+
+    const cgpa = (totalPoints / totalCredits).toFixed(2);
     document.getElementById('result').innerHTML =
         '<div class="result-panel"><div class="result-label">Cumulative GPA</div>' +
         '<div class="result-value">' + cgpa + '</div></div>';
@@ -47,6 +42,9 @@ function clear() {
 
 document.addEventListener('DOMContentLoaded', () => {
     GpaApp.init();
-    init();
+    GpaApp.renderGradingScale();
+    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    document.getElementById('clearBtn').addEventListener('click', clear);
+    addCourse();
 });
-

@@ -1,25 +1,18 @@
 import { GpaApp } from './shared.js';
-const $ = window.$ || jQuery;
 
 const selectedCourses = new Set();
 
-function init() {
-    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
-    document.getElementById('calculateBtn').addEventListener('click', calculate);
-    document.getElementById('clearBtn').addEventListener('click', clear);
-}
-
 function addCourse() {
     GpaApp.addCourseRow({
-        onSelect: function (input, ui) {
-            if (selectedCourses.has(ui.item.value)) {
-                alert("You have already selected this course. You cannot repeat a course in the same semester or academic year.");
-                $(input).val('');
-            } else {
-                selectedCourses.add(ui.item.value);
-                $(input).val(ui.item.label);
-                $(input).closest('tr').find('.credits-input').text(ui.item.credits);
+        onSelect: function (input, item) {
+            if (selectedCourses.has(item.value)) {
+                GpaApp.showNotice('This course is already in the list. A course can only be counted once per semester or academic year.');
+                return false;
             }
+            selectedCourses.add(item.value);
+        },
+        onDeselect: function (courseNumber) {
+            selectedCourses.delete(courseNumber);
         }
     });
 }
@@ -36,7 +29,12 @@ function calculate() {
         }
     });
 
-    const gpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 0;
+    if (totalCredits === 0) {
+        GpaApp.showNotice('Add at least one course with credits and a grade to calculate your GPA.');
+        return;
+    }
+
+    const gpa = (totalPoints / totalCredits).toFixed(2);
     document.getElementById('result').innerHTML =
         '<div class="result-panel"><div class="result-label">Semester GPA</div>' +
         '<div class="result-value">' + gpa + '</div></div>';
@@ -52,7 +50,9 @@ function clear() {
 
 document.addEventListener('DOMContentLoaded', () => {
     GpaApp.init();
-    init();
+    GpaApp.renderGradingScale();
+    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
+    document.getElementById('calculateBtn').addEventListener('click', calculate);
+    document.getElementById('clearBtn').addEventListener('click', clear);
+    addCourse();
 });
-// Export functions if they are needed by other modules, otherwise, no need to export.
-// For now, they are only used internally within this module.
