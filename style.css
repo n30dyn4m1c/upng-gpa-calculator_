@@ -143,8 +143,10 @@ body {
 }
 
 /* ── Transcript Table ────────────────────────────────── */
+/* Overflow stays visible so the autocomplete dropdown isn't clipped;
+   the ≤600px card layout handles narrow screens. */
 .transcript-wrap {
-    overflow-x: auto;
+    overflow: visible;
 }
 
 .transcript-table {
@@ -212,7 +214,28 @@ body {
     color: var(--text);
 }
 
-.credits-input,
+.credits-input {
+    width: 72px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 7px 6px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.credits-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
+    outline: none;
+}
+
 .grade-points {
     font-weight: 600;
     color: var(--text-muted);
@@ -334,39 +357,71 @@ body {
 }
 
 /* ── Autocomplete ────────────────────────────────────── */
-.ui-autocomplete {
-    background: #fff !important;
-    border: 1.5px solid var(--border) !important;
-    border-radius: 8px !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
-    color: var(--text) !important;
-    padding: 6px !important;
-    z-index: 10001 !important;
+.ac-wrap {
+    position: relative;
+}
+
+.ac-list {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    margin: 0;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    color: var(--text);
+    padding: 6px;
+    list-style: none;
+    z-index: 10001;
     max-height: 300px;
     overflow-y: auto;
 }
 
-.ui-menu-item {
-    list-style: none;
-    padding: 0;
-    margin: 2px 0;
-}
-
-.ui-menu-item-wrapper {
-    padding: 9px 12px !important;
-    border-radius: 6px !important;
-    color: var(--text) !important;
+.ac-item {
+    padding: 9px 12px;
+    border-radius: 6px;
+    color: var(--text);
     cursor: pointer;
     font-size: 0.88rem;
-    border: 1px solid transparent !important;
     transition: background 0.12s;
 }
 
-.ui-menu-item-wrapper.ui-state-active,
-.ui-menu-item-wrapper:hover {
-    background: var(--blue) !important;
-    color: #fff !important;
+.ac-item.is-active,
+.ac-item:hover {
+    background: var(--blue);
+    color: #fff;
     font-weight: 600;
+}
+
+.ac-item-muted {
+    color: var(--text-muted);
+    cursor: default;
+    font-style: italic;
+}
+
+.ac-item-muted:hover {
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* ── Inline Notice ───────────────────────────────────── */
+.form-notice {
+    display: none;
+    margin: 12px 20px 0;
+    padding: 10px 14px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.form-notice.is-visible {
+    display: block;
 }
 
 /* ── Notes / Formula Section ─────────────────────────── */
@@ -376,8 +431,37 @@ body {
     border-radius: 8px;
     padding: 14px;
     text-align: center;
-    font-size: 1.05rem;
+    font-size: 1rem;
     margin: 10px 0 18px;
+}
+
+.fraction {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: 4px;
+}
+
+.fraction .numer {
+    display: block;
+    padding: 0 10px 4px;
+    border-bottom: 1.5px solid var(--text);
+}
+
+.fraction .denom {
+    display: block;
+    padding: 4px 10px 0;
+}
+
+.note-text {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin: 0 0 14px;
+    font-size: 0.92rem;
+}
+
+.card-body .note-text:last-child {
+    margin-bottom: 0;
 }
 
 .grade-badges {
@@ -554,11 +638,6 @@ body {
         display: flex;
         align-items: center;
         padding: 6px 12px;
-    }
-
-    /* Remove overflow clip so card borders show */
-    .transcript-wrap {
-        overflow-x: visible;
     }
 
     /* Stack action bar buttons full-width */
