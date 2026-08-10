@@ -16,9 +16,13 @@ Built around the University of Papua New Guinea grading scale and official cours
 
 - **GPA Calculator** — add courses, pick grades, and get a credit-weighted semester or year GPA
 - **CGPA Calculator** — enter courses across all semesters; repeated courses automatically count only the highest grade
-- **Course autocomplete** — search 1,100+ official UPNG courses by code or name, with credit values filled in automatically (arrow keys, Enter, Escape)
+- **Live results** — the GPA dial, credits, quality points and grade mix update as you type; `Ctrl`/`⌘` + `Enter` recalculates and announces the result
+- **Course autocomplete** — search 1,100+ official UPNG courses by code or name, with matched text highlighted and credit values filled in automatically (arrow keys, Enter, Escape)
 - **Manual entry** — courses not in the list can be typed in, with credits entered by hand
+- **Saved locally** — entries are restored on your next visit via `localStorage`, and clearing everything can be undone
+- **Light & dark themes** — follows your system setting, with a toggle that is remembered
 - **Responsive design** — the course table switches to a card layout on small screens
+- **Accessible** — keyboard-navigable throughout, with a skip link, focus-visible rings, live-region announcements, and `prefers-reduced-motion` support
 
 ## Grading Scale
 
@@ -68,8 +72,8 @@ Existing course codes are kept as-is; only new codes are appended.
 index.html        GPA calculator page
 cgpa.html         CGPA calculator page
 about.html        About & feedback page
-style.css         Shared styles (incl. responsive layout)
-shared.js         Shared app logic (course table, autocomplete, parsing)
+style.css         Design system + all page styles (themes, layout, components)
+shared.js         Shared app logic (course table, autocomplete, summary, storage, theme)
 script.js         GPA page logic
 cgpa.js           CGPA page logic (repeat-course handling)
 gradingScale.js   UPNG grade-to-points mapping
