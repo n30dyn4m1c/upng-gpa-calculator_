@@ -1,50 +1,91 @@
 import { GpaApp } from './shared.js';
 
-function addCourse() {
-    GpaApp.addCourseRow();
-}
-
-function calculate() {
-    const rows = GpaApp.getRows();
+/**
+ * Totals across every complete row, keeping only the highest grade per course.
+ * Rows without a course code can't be matched as repeats, so each one counts.
+ */
+function summarize() {
     const courseMap = new Map();
+    let attempts = 0;
 
-    rows.forEach(function (row, index) {
+    GpaApp.getRows().forEach(function (row, index) {
         const data = GpaApp.parseRow(row);
-        if (data) {
-            // Rows without a course code can't be matched as repeats — count each one
-            const key = data.course || '__row' + index;
-            if (!courseMap.has(key) || data.points > courseMap.get(key).points) {
-                courseMap.set(key, { credits: data.credits, points: data.points });
-            }
+        if (!data) return;
+        attempts += 1;
+        const key = data.course || '__row' + index;
+        if (!courseMap.has(key) || data.points > courseMap.get(key).points) {
+            courseMap.set(key, data);
         }
     });
 
-    let totalPoints = 0, totalCredits = 0;
-    courseMap.forEach(function (v) {
-        totalPoints += v.credits * v.points;
-        totalCredits += v.credits;
+    let qualityPoints = 0;
+    let credits = 0;
+    const counts = {};
+
+    courseMap.forEach(function (data) {
+        qualityPoints += data.credits * data.points;
+        credits += data.credits;
+        counts[data.grade] = (counts[data.grade] || 0) + 1;
     });
 
-    if (totalCredits === 0) {
+    return {
+        qualityPoints: qualityPoints,
+        credits: credits,
+        count: courseMap.size,
+        attempts: attempts,
+        counts: counts
+    };
+}
+
+/** Repaints the summary rail. Returns the totals so callers can react. */
+function refresh(animate) {
+    const totals = summarize();
+    const cgpa = totals.credits > 0 ? totals.qualityPoints / totals.credits : null;
+
+    GpaApp.renderResult({
+        label: 'Cumulative GPA',
+        gpa: cgpa,
+        credits: totals.credits,
+        qualityPoints: totals.qualityPoints,
+        count: totals.count,
+        countLabel: 'Counted',
+        animate: animate
+    });
+    GpaApp.renderDistribution(totals.counts);
+
+    const repeats = document.getElementById('repeatNote');
+    if (repeats) {
+        const dropped = totals.attempts - totals.count;
+        repeats.textContent = dropped > 0
+            ? dropped + (dropped === 1 ? ' repeat attempt is' : ' repeat attempts are') +
+              ' excluded — only the highest grade per course counts.'
+            : 'Repeat a course and only its highest grade will count.';
+    }
+
+    return { cgpa: cgpa, totals: totals };
+}
+
+function calculate() {
+    const result = refresh(true);
+
+    if (result.cgpa === null) {
         GpaApp.showNotice('Add at least one course with credits and a grade to calculate your CGPA.');
+        GpaApp.announce('No courses with both credits and a grade yet.');
         return;
     }
 
-    const cgpa = (totalPoints / totalCredits).toFixed(2);
-    document.getElementById('result').innerHTML =
-        '<div class="result-panel"><div class="result-label">Cumulative GPA</div>' +
-        '<div class="result-value">' + cgpa + '</div></div>';
-}
-
-function clear() {
-    GpaApp.clearAllCourses();
+    GpaApp.announce(
+        'Cumulative GPA is ' + result.cgpa.toFixed(2) + ' out of 5, from ' +
+        result.totals.count + ' courses and ' + result.totals.credits + ' credits.'
+    );
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    GpaApp.init();
-    GpaApp.renderGradingScale();
-    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
-    document.getElementById('calculateBtn').addEventListener('click', calculate);
-    document.getElementById('clearBtn').addEventListener('click', clear);
-    addCourse();
+    GpaApp.mount({
+        storageKey: 'upng-cgpa-rows-v1',
+        onChange: function () {
+            refresh(false);
+        },
+        onCalculate: calculate
+    });
 });

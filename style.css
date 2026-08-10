@@ -1,150 +1,598 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+/* ════════════════════════════════════════════════════════════════
+   UPNG GPA Calculator — Design System
+   Heritage navy + gold, rebuilt for a modern, accessible, dual-theme UI.
+   No external fonts or assets: everything here is self-contained.
+   ════════════════════════════════════════════════════════════════ */
 
+/* ── 1. Tokens ───────────────────────────────────────────────── */
 :root {
-    --blue: #003366;
-    --gold: #FFD700;
-    --page-bg: #f4f6f9;
-    --card-bg: #ffffff;
-    --text: #1c2b3a;
-    --text-muted: #718096;
-    --border: #e2e8f0;
-    --stripe: #f8fafc;
-    --hover-row: #eff6ff;
-    --red: #e53e3e;
+    /* Brand */
+    --brand: #003366;
+    --brand-600: #0a4a8f;
+    --brand-500: #1f6fc4;
+    --brand-400: #4b93e0;
+    --gold: #ffc93c;
+    --gold-deep: #a97400;
+
+    /* Canvas & surfaces */
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface-2: #f7f9fc;
+    --surface-3: #eef2f8;
+    --surface-inset: #ffffff;
+
+    /* Ink */
+    --text: #0f1b2d;
+    --text-muted: #55677f;
+    --text-faint: #8494a9;
+    --on-brand: #ffffff;
+
+    /* Lines */
+    --border: rgba(15, 40, 80, 0.11);
+    --border-strong: rgba(15, 40, 80, 0.2);
+    --divider: rgba(15, 40, 80, 0.07);
+
+    /* Interaction */
+    --ring: rgba(31, 111, 196, 0.28);
+    --hover-tint: rgba(31, 111, 196, 0.05);
+    --active-tint: rgba(31, 111, 196, 0.09);
+
+    /* Status */
+    --danger: #cc2f2f;
+    --danger-soft: rgba(204, 47, 47, 0.09);
+    --warn: #a35b00;
+    --warn-soft: #fff8e8;
+    --warn-line: rgba(217, 131, 36, 0.4);
+    --success: #0f7a52;
+
+    /* Grade palette */
+    --g-hd: #b07d00;
+    --g-di: #1f6fc4;
+    --g-cr: #0d8a72;
+    --g-pa: #5b6d8a;
+    --g-cp: #b06a12;
+    --g-f: #c0392b;
+
+    /* Elevation */
+    --shadow-sm: 0 1px 2px rgba(10, 26, 51, 0.06), 0 1px 3px rgba(10, 26, 51, 0.05);
+    --shadow-md: 0 2px 4px rgba(10, 26, 51, 0.04), 0 8px 24px rgba(10, 26, 51, 0.07);
+    --shadow-lg: 0 4px 8px rgba(10, 26, 51, 0.05), 0 24px 48px rgba(10, 26, 51, 0.12);
+    --shadow-brand: 0 6px 20px rgba(0, 51, 102, 0.24);
+
+    /* Geometry */
+    --r-xs: 7px;
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 26px;
+    --r-full: 999px;
+    --header-h: 66px;
+    --wrap: 1180px;
+
+    /* Motion */
+    --ease: cubic-bezier(0.32, 0.72, 0.28, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --fast: 0.14s;
+    --mid: 0.24s;
+    --slow: 0.42s;
+
+    /* Type */
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+    --font-num: ui-rounded, "SF Pro Rounded", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    color-scheme: light;
 }
 
-* {
+/* Dark — system preference, unless the user explicitly chose light */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --brand: #12325c;
+        --brand-600: #1c5ba3;
+        --brand-500: #4d94e8;
+        --brand-400: #7fb4f2;
+        --gold: #ffd166;
+        --gold-deep: #ffcf5c;
+
+        --bg: #070b13;
+        --surface: #0e1522;
+        --surface-2: #131c2c;
+        --surface-3: #1a2435;
+        --surface-inset: #0b111c;
+
+        --text: #e9eefa;
+        --text-muted: #9dadc6;
+        --text-faint: #71829c;
+        --on-brand: #ffffff;
+
+        --border: rgba(150, 180, 225, 0.14);
+        --border-strong: rgba(150, 180, 225, 0.26);
+        --divider: rgba(150, 180, 225, 0.09);
+
+        --ring: rgba(93, 158, 235, 0.4);
+        --hover-tint: rgba(120, 170, 240, 0.06);
+        --active-tint: rgba(120, 170, 240, 0.11);
+
+        --danger: #ff7a7a;
+        --danger-soft: rgba(255, 122, 122, 0.12);
+        --warn: #ffcc80;
+        --warn-soft: rgba(217, 131, 36, 0.14);
+        --warn-line: rgba(255, 190, 100, 0.34);
+        --success: #56d3a0;
+
+        --g-hd: #ffd166;
+        --g-di: #6aa9f0;
+        --g-cr: #3fc9a8;
+        --g-pa: #9fb0cc;
+        --g-cp: #f0a95c;
+        --g-f: #ff8a80;
+
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+        --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.5), 0 32px 64px rgba(0, 0, 0, 0.55);
+        --shadow-brand: 0 6px 22px rgba(0, 0, 0, 0.55);
+
+        color-scheme: dark;
+    }
+}
+
+/* Dark — explicit user choice (wins over system light) */
+:root[data-theme="dark"] {
+    --brand: #12325c;
+    --brand-600: #1c5ba3;
+    --brand-500: #4d94e8;
+    --brand-400: #7fb4f2;
+    --gold: #ffd166;
+    --gold-deep: #ffcf5c;
+
+    --bg: #070b13;
+    --surface: #0e1522;
+    --surface-2: #131c2c;
+    --surface-3: #1a2435;
+    --surface-inset: #0b111c;
+
+    --text: #e9eefa;
+    --text-muted: #9dadc6;
+    --text-faint: #71829c;
+    --on-brand: #ffffff;
+
+    --border: rgba(150, 180, 225, 0.14);
+    --border-strong: rgba(150, 180, 225, 0.26);
+    --divider: rgba(150, 180, 225, 0.09);
+
+    --ring: rgba(93, 158, 235, 0.4);
+    --hover-tint: rgba(120, 170, 240, 0.06);
+    --active-tint: rgba(120, 170, 240, 0.11);
+
+    --danger: #ff7a7a;
+    --danger-soft: rgba(255, 122, 122, 0.12);
+    --warn: #ffcc80;
+    --warn-soft: rgba(217, 131, 36, 0.14);
+    --warn-line: rgba(255, 190, 100, 0.34);
+    --success: #56d3a0;
+
+    --g-hd: #ffd166;
+    --g-di: #6aa9f0;
+    --g-cr: #3fc9a8;
+    --g-pa: #9fb0cc;
+    --g-cp: #f0a95c;
+    --g-f: #ff8a80;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.5), 0 32px 64px rgba(0, 0, 0, 0.55);
+    --shadow-brand: 0 6px 22px rgba(0, 0, 0, 0.55);
+
+    color-scheme: dark;
+}
+
+/* ── 2. Base ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Outfit', sans-serif;
-    background: var(--page-bg);
-    color: var(--text);
     min-height: 100vh;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
-/* ── Site Header ─────────────────────────────────────── */
+/* Ambient light — a soft brand wash behind everything */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(58% 42% at 8% -8%, color-mix(in oklab, var(--brand-500) 20%, transparent), transparent 68%),
+        radial-gradient(44% 38% at 96% -4%, color-mix(in oklab, var(--gold) 16%, transparent), transparent 70%),
+        radial-gradient(70% 46% at 52% 108%, color-mix(in oklab, var(--brand-400) 12%, transparent), transparent 74%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    font-weight: 700;
+    text-wrap: balance;
+}
+
+p {
+    margin: 0;
+    text-wrap: pretty;
+}
+
+a {
+    color: var(--brand-600);
+    text-decoration-color: color-mix(in oklab, var(--brand-600) 35%, transparent);
+    text-underline-offset: 3px;
+    transition: color var(--fast) var(--ease);
+}
+
+a:hover {
+    color: var(--brand-500);
+    text-decoration-color: currentColor;
+}
+
+::selection {
+    background: color-mix(in oklab, var(--gold) 55%, transparent);
+    color: var(--text);
+}
+
+:focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: 2px;
+    border-radius: var(--r-xs);
+}
+
+/* ── 3. Utilities ────────────────────────────────────────────── */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    z-index: 300;
+    transform: translate(-50%, -160%);
+    padding: 10px 20px;
+    border-radius: var(--r-full);
+    background: var(--brand);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 650;
+    text-decoration: none;
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--mid) var(--ease-out);
+}
+
+.skip-link:focus-visible {
+    transform: translate(-50%, 0);
+    color: #fff;
+}
+
+/* ── 4. Header ───────────────────────────────────────────────── */
 .site-header {
-    background: var(--blue);
     position: sticky;
     top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    z-index: 120;
+    background: color-mix(in oklab, var(--surface) 78%, transparent);
+    border-bottom: 1px solid var(--divider);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .site-header {
+        -webkit-backdrop-filter: blur(18px) saturate(180%);
+        backdrop-filter: blur(18px) saturate(180%);
+    }
 }
 
 .header-inner {
-    max-width: 900px;
+    max-width: var(--wrap);
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 clamp(14px, 3vw, 28px);
+    min-height: var(--header-h);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 56px;
+    gap: 16px;
 }
 
 .header-brand {
-    color: #fff;
-    font-size: 1.05rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    margin-right: auto;
+    color: var(--text);
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 0.01em;
+    letter-spacing: -0.015em;
+    text-decoration: none;
     white-space: nowrap;
+}
+
+.brand-mark {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--mid) var(--ease-out);
+}
+
+.header-brand:hover .brand-mark {
+    transform: rotate(-6deg) scale(1.06);
 }
 
 .brand-accent {
-    color: var(--gold);
+    color: var(--gold-deep);
 }
 
+/* Segmented navigation */
 .site-nav {
     display: flex;
-    gap: 4px;
+    gap: 2px;
+    padding: 4px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-full);
+    background: var(--surface-2);
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.82);
-    padding: 6px 14px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.88rem;
+    position: relative;
+    padding: 7px 15px;
+    border-radius: var(--r-full);
+    color: var(--text-muted);
+    font-size: 0.855rem;
     font-weight: 600;
-    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
     white-space: nowrap;
+    transition: color var(--fast) var(--ease), background var(--fast) var(--ease);
 }
 
 .nav-link:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
+    color: var(--text);
+    background: var(--hover-tint);
 }
 
 .nav-link.active {
-    background: var(--gold);
-    color: var(--blue);
-    font-weight: 700;
+    background: var(--brand);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
 }
 
-/* ── Page Wrap ───────────────────────────────────────── */
-.page-wrap {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px 20px 48px;
-}
-
-/* ── Page Heading ────────────────────────────────────── */
-.page-heading {
-    border-left: 4px solid var(--gold);
-    padding-left: 14px;
-    margin-bottom: 24px;
-}
-
-.page-heading h1 {
-    margin: 0 0 4px;
-    font-size: 1.55rem;
-    font-weight: 700;
-    color: var(--blue);
-}
-
-.page-heading p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.93rem;
-}
-
-/* ── Cards ───────────────────────────────────────────── */
-.card {
-    background: var(--card-bg);
+.theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    padding: 0;
     border: 1px solid var(--border);
-    border-radius: 10px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-    margin-bottom: 24px;
+    border-radius: var(--r-full);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--fast) var(--ease), background var(--fast) var(--ease),
+        border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+
+.theme-toggle:hover {
+    color: var(--text);
+    border-color: var(--border-strong);
+    background: var(--surface-3);
+}
+
+.theme-toggle:active {
+    transform: scale(0.94);
+}
+
+.theme-toggle svg {
+    width: 17px;
+    height: 17px;
+    grid-area: 1 / 1;
+    transition: opacity var(--mid) var(--ease), transform var(--mid) var(--ease-out);
+}
+
+.theme-toggle .icon-moon {
+    opacity: 0;
+    transform: rotate(-70deg) scale(0.5);
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+    opacity: 0;
+    transform: rotate(70deg) scale(0.5);
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun {
+        opacity: 0;
+        transform: rotate(70deg) scale(0.5);
+    }
+
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ── 5. Layout ───────────────────────────────────────────────── */
+.page-wrap {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding: clamp(24px, 4vw, 44px) clamp(14px, 3vw, 28px) 56px;
+}
+
+.workspace {
+    display: grid;
+    gap: clamp(16px, 2vw, 22px);
+    align-items: start;
+}
+
+@media (min-width: 1000px) {
+    .workspace {
+        grid-template-columns: minmax(0, 1fr) 330px;
+    }
+}
+
+.summary-rail {
+    display: grid;
+    gap: 16px;
+}
+
+@media (min-width: 1000px) {
+    .summary-rail {
+        position: sticky;
+        top: calc(var(--header-h) + 18px);
+    }
+}
+
+/* ── 6. Hero ─────────────────────────────────────────────────── */
+.hero {
+    margin-bottom: clamp(22px, 3vw, 34px);
+    max-width: 66ch;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding: 5px 12px 5px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-full);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.hero-eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--gold) 28%, transparent);
+}
+
+.hero h1 {
+    font-size: clamp(1.95rem, 1.15rem + 3.1vw, 3.1rem);
+    letter-spacing: -0.035em;
+    background: linear-gradient(170deg, var(--text) 30%, color-mix(in oklab, var(--text) 62%, var(--brand-500)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    margin-top: 12px;
+    font-size: clamp(0.98rem, 0.93rem + 0.25vw, 1.1rem);
+    color: var(--text-muted);
+}
+
+/* ── 7. Cards ────────────────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
 }
 
+/* The calculator card must not clip the autocomplete dropdown */
+.card--open {
+    overflow: visible;
+}
+
+.stack {
+    display: grid;
+    gap: clamp(16px, 2vw, 22px);
+    margin-top: clamp(16px, 2vw, 22px);
+}
+
 .card-header {
-    background: var(--blue);
-    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px clamp(16px, 2.2vw, 22px);
+    border-bottom: 1px solid var(--divider);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
-    padding: 9px 20px;
+}
+
+.card-header::before {
+    content: "";
+    width: 3px;
+    height: 14px;
+    border-radius: var(--r-full);
+    background: var(--gold);
+}
+
+.card-header .hint {
+    margin-left: auto;
+    color: var(--text-faint);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
 }
 
 .card-body {
-    padding: 20px;
+    padding: clamp(18px, 2.4vw, 24px);
 }
 
 .card-body h4 {
-    margin: 0 0 14px;
-    color: var(--blue);
-    font-size: 0.98rem;
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 0.95rem;
     font-weight: 700;
 }
 
-/* ── Transcript Table ────────────────────────────────── */
-/* Overflow stays visible so the autocomplete dropdown isn't clipped;
-   the ≤600px card layout handles narrow screens. */
+.card-body h4:not(:first-child) {
+    margin-top: 26px;
+}
+
+/* ── 8. Course table ─────────────────────────────────────────── */
 .transcript-wrap {
     overflow: visible;
 }
@@ -152,106 +600,398 @@ body {
 .transcript-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.93rem;
+    font-size: 0.92rem;
+    counter-reset: courserow;
 }
 
-.transcript-table thead tr {
-    background: var(--blue);
-}
-
-.transcript-table th {
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.78rem;
+.transcript-table thead th {
+    padding: 11px clamp(12px, 1.6vw, 18px);
+    border-bottom: 1px solid var(--divider);
+    background: var(--surface);
+    color: var(--text-faint);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 11px 14px;
     text-align: left;
     white-space: nowrap;
 }
 
 .transcript-table tbody tr {
-    border-bottom: 1px solid var(--border);
-    transition: background 0.12s;
+    counter-increment: courserow;
+    border-bottom: 1px solid var(--divider);
+    transition: background var(--fast) var(--ease);
 }
 
-.transcript-table tbody tr:nth-child(even) {
-    background: var(--stripe);
+.transcript-table tbody tr:last-child {
+    border-bottom: 0;
 }
 
 .transcript-table tbody tr:hover {
-    background: var(--hover-row);
+    background: var(--hover-tint);
+}
+
+.transcript-table tbody tr:focus-within {
+    background: var(--active-tint);
 }
 
 .transcript-table td {
-    padding: 9px 14px;
+    padding: 9px clamp(12px, 1.6vw, 18px);
     vertical-align: middle;
 }
 
-/* ── Form Controls ───────────────────────────────────── */
+/* Row number chip lives beside the course field */
+.transcript-table td[data-label="Course"] {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.transcript-table td[data-label="Course"]::before {
+    content: counter(courserow);
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--r-full);
+    background: var(--surface-3);
+    color: var(--text-faint);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.transcript-table tr:focus-within td[data-label="Course"]::before {
+    background: var(--brand);
+    color: #fff;
+}
+
+.transcript-table td[data-label="Course"] .ac-wrap {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Row entrance / exit */
+@keyframes row-in {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.transcript-table tbody tr.row-enter {
+    animation: row-in var(--mid) var(--ease-out) both;
+}
+
+.transcript-table tbody tr.is-leaving {
+    opacity: 0;
+    transform: translateX(14px);
+    transition: opacity var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+
+/* Empty state */
+.table-empty {
+    display: none;
+    padding: 44px 24px;
+    text-align: center;
+    color: var(--text-faint);
+}
+
+.table-empty.is-visible {
+    display: block;
+}
+
+.table-empty strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.table-empty span {
+    font-size: 0.87rem;
+}
+
+/* ── 9. Form controls ────────────────────────────────────────── */
 .course-input,
-.grade-select {
+.grade-select,
+.credits-input {
     width: 100%;
-    background: #fff;
+    min-height: 40px;
+    padding: 8px 12px;
     border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    background: var(--surface-inset);
     color: var(--text);
-    border-radius: 6px;
-    padding: 7px 10px;
     font-family: inherit;
     font-size: 0.9rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease),
+        background var(--fast) var(--ease);
+}
+
+.course-input::placeholder,
+.credits-input::placeholder {
+    color: var(--text-faint);
+}
+
+.course-input:hover,
+.grade-select:hover,
+.credits-input:hover {
+    border-color: var(--border-strong);
 }
 
 .course-input:focus,
-.grade-select:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
+.grade-select:focus,
+.credits-input:focus {
     outline: none;
-}
-
-.grade-select option {
-    background: #fff;
-    color: var(--text);
+    border-color: var(--brand-500);
+    box-shadow: 0 0 0 3px var(--ring);
 }
 
 .credits-input {
-    width: 72px;
+    width: 74px;
     margin: 0 auto;
-    background: #fff;
-    border: 1px solid var(--border);
+    padding-inline: 8px;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    display: block;
+}
+
+/* Custom select chevron (inline SVG, no network) */
+.grade-select {
+    -webkit-appearance: none;
+    appearance: none;
+    padding-right: 30px;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2355677f' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 9px center;
+    background-size: 15px;
+    cursor: pointer;
+}
+
+:root[data-theme="dark"] .grade-select {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239dadc6' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .grade-select {
+        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239dadc6' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6.5 8 10.5 12 6.5'/%3E%3C/svg%3E");
+    }
+}
+
+.grade-select option {
+    background: var(--surface);
     color: var(--text);
-    border-radius: 6px;
-    padding: 7px 6px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 600;
-    text-align: center;
-    display: block;
-    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.credits-input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
-    outline: none;
-}
-
+/* Grade-point pill */
 .grade-points {
-    font-weight: 600;
-    color: var(--text-muted);
-    text-align: center;
-    display: block;
+    display: inline-grid;
+    place-items: center;
+    min-width: 34px;
+    height: 26px;
+    margin: 0 auto;
+    padding: 0 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-full);
+    background: var(--surface-3);
+    color: var(--text-faint);
+    font-size: 0.83rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease),
+        background var(--fast) var(--ease);
 }
 
-/* ── Action Bar ──────────────────────────────────────── */
+td[data-label="GP"] {
+    text-align: center;
+}
+
+.grade-points[data-points="5"] {
+    color: var(--g-hd);
+    border-color: color-mix(in oklab, var(--g-hd) 40%, transparent);
+    background: color-mix(in oklab, var(--g-hd) 12%, transparent);
+}
+
+.grade-points[data-points="4"] {
+    color: var(--g-di);
+    border-color: color-mix(in oklab, var(--g-di) 40%, transparent);
+    background: color-mix(in oklab, var(--g-di) 12%, transparent);
+}
+
+.grade-points[data-points="3"] {
+    color: var(--g-cr);
+    border-color: color-mix(in oklab, var(--g-cr) 40%, transparent);
+    background: color-mix(in oklab, var(--g-cr) 12%, transparent);
+}
+
+.grade-points[data-points="2"] {
+    color: var(--g-pa);
+    border-color: color-mix(in oklab, var(--g-pa) 40%, transparent);
+    background: color-mix(in oklab, var(--g-pa) 12%, transparent);
+}
+
+.grade-points[data-points="1"] {
+    color: var(--g-cp);
+    border-color: color-mix(in oklab, var(--g-cp) 40%, transparent);
+    background: color-mix(in oklab, var(--g-cp) 12%, transparent);
+}
+
+.grade-points[data-points="0"] {
+    color: var(--g-f);
+    border-color: color-mix(in oklab, var(--g-f) 40%, transparent);
+    background: color-mix(in oklab, var(--g-f) 12%, transparent);
+}
+
+/* ── 10. Autocomplete ────────────────────────────────────────── */
+.ac-wrap {
+    position: relative;
+}
+
+.ac-list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 10001;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-lg);
+    max-height: 306px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    animation: ac-in 0.16s var(--ease-out) both;
+}
+
+@supports (backdrop-filter: blur(1px)) {
+    .ac-list {
+        background: color-mix(in oklab, var(--surface) 92%, transparent);
+        backdrop-filter: blur(14px) saturate(160%);
+    }
+}
+
+@keyframes ac-in {
+    from {
+        opacity: 0;
+        transform: translateY(-5px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.ac-list::-webkit-scrollbar {
+    width: 9px;
+}
+
+.ac-list::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: var(--r-full);
+    background: var(--border-strong);
+    background-clip: content-box;
+}
+
+.ac-item {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    padding: 8px 11px;
+    border-radius: var(--r-sm);
+    color: var(--text);
+    font-size: 0.87rem;
+    cursor: pointer;
+    transition: background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.ac-code {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.79rem;
+    font-weight: 600;
+    color: var(--brand-600);
+}
+
+.ac-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ac-credits {
+    flex-shrink: 0;
+    color: var(--text-faint);
+    font-size: 0.74rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.ac-item mark {
+    padding: 0 1px;
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--gold) 45%, transparent);
+    color: inherit;
+    font-weight: 700;
+}
+
+.ac-item.is-active,
+.ac-item:hover {
+    background: var(--brand);
+    color: #fff;
+}
+
+.ac-item.is-active .ac-code,
+.ac-item:hover .ac-code,
+.ac-item.is-active .ac-credits,
+.ac-item:hover .ac-credits {
+    color: color-mix(in oklab, #fff 78%, transparent);
+}
+
+.ac-item.is-active mark,
+.ac-item:hover mark {
+    background: color-mix(in oklab, var(--gold) 70%, transparent);
+    color: #10233d;
+}
+
+.ac-item-muted {
+    display: block;
+    color: var(--text-faint);
+    cursor: default;
+    font-style: italic;
+}
+
+.ac-item-muted:hover {
+    background: transparent;
+    color: var(--text-faint);
+}
+
+/* ── 11. Buttons ─────────────────────────────────────────────── */
 .action-bar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 14px 20px;
-    border-top: 1px solid var(--border);
+    justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
+    padding: 14px clamp(16px, 2.2vw, 22px);
+    border-top: 1px solid var(--divider);
+    background: var(--surface-2);
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
 }
 
 .action-right {
@@ -259,205 +999,515 @@ body {
     gap: 8px;
 }
 
-/* ── Buttons ─────────────────────────────────────────── */
 .btn {
-    border-radius: 7px;
-    padding: 9px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: var(--r-sm);
     font-family: inherit;
-    font-size: 0.88rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.15s, box-shadow 0.15s;
-    border: none;
+    font-size: 0.875rem;
+    font-weight: 650;
+    letter-spacing: -0.005em;
     white-space: nowrap;
+    cursor: pointer;
+    transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease),
+        box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
 }
 
 .btn-add {
-    background: #fff;
-    color: var(--blue);
-    border: 1.5px solid var(--blue);
+    background: var(--surface);
+    color: var(--brand-600);
+    border-color: var(--border-strong);
+    border-style: dashed;
 }
 
 .btn-add:hover {
-    background: #eff6ff;
+    background: var(--hover-tint);
+    border-color: var(--brand-500);
+    border-style: solid;
 }
 
 .btn-calculate {
-    background: var(--blue);
+    background: linear-gradient(180deg, var(--brand-600), var(--brand));
     color: #fff;
+    box-shadow: var(--shadow-brand);
 }
 
 .btn-calculate:hover {
-    background: #002450;
-    box-shadow: 0 3px 10px rgba(0, 51, 102, 0.25);
+    background: linear-gradient(180deg, var(--brand-500), var(--brand-600));
+    box-shadow: 0 8px 26px color-mix(in oklab, var(--brand-600) 40%, transparent);
 }
 
 .btn-clear {
-    background: #fff;
-    color: var(--red);
-    border: 1.5px solid #fecaca;
+    background: transparent;
+    color: var(--danger);
+    border-color: color-mix(in oklab, var(--danger) 32%, transparent);
 }
 
 .btn-clear:hover {
-    background: #fff5f5;
+    background: var(--danger-soft);
+    border-color: var(--danger);
 }
 
-/* ── Remove Row Button ───────────────────────────────── */
+.btn-ghost {
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border-color: var(--border);
+}
+
+.btn-ghost:hover {
+    background: var(--surface-3);
+    color: var(--text);
+    border-color: var(--border-strong);
+}
+
+.kbd-hint {
+    display: inline-block;
+    margin-left: 2px;
+    padding: 1px 5px;
+    border: 1px solid color-mix(in oklab, currentColor 30%, transparent);
+    border-radius: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.68em;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Remove-row button */
 .btn-remove {
-    background: transparent;
-    color: var(--red);
-    border: 1px solid #fecaca;
+    display: grid;
+    place-items: center;
     width: 32px;
     height: 32px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.1rem;
-    line-height: 1;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    margin-left: auto;
     padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--r-xs);
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    transition: background var(--fast) var(--ease), color var(--fast) var(--ease),
+        border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+
+.btn-remove svg {
+    width: 15px;
+    height: 15px;
 }
 
 .btn-remove:hover {
-    background: var(--red);
-    color: #fff;
-    border-color: var(--red);
+    background: var(--danger-soft);
+    border-color: color-mix(in oklab, var(--danger) 30%, transparent);
+    color: var(--danger);
 }
 
-/* ── Result Display ──────────────────────────────────── */
-#result {
-    margin: 0;
-    padding: 0;
+.btn-remove:active {
+    transform: scale(0.9);
 }
 
+/* ── 12. Result / summary ────────────────────────────────────── */
 .result-panel {
-    background: var(--blue);
+    position: relative;
+    padding: 26px 22px 20px;
+    overflow: hidden;
+    background:
+        radial-gradient(120% 90% at 50% -20%, color-mix(in oklab, var(--brand-500) 42%, transparent), transparent 62%),
+        linear-gradient(165deg, var(--brand-600), var(--brand) 62%, #001c39);
     color: #fff;
     text-align: center;
-    padding: 28px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.result-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 8px;
+.result-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(60% 40% at 82% 108%, color-mix(in oklab, var(--gold) 22%, transparent), transparent 70%);
+}
+
+.result-dial {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 168px;
+    height: 168px;
+    margin: 0 auto 14px;
+}
+
+.result-dial svg {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.dial-track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.14);
+    stroke-width: 9;
+}
+
+.dial-fill {
+    fill: none;
+    stroke: url(#dialGrad);
+    stroke-width: 9;
+    stroke-linecap: round;
+    transition: stroke-dashoffset var(--slow) var(--ease-out);
+}
+
+.dial-center {
+    grid-area: 1 / 1;
+    display: grid;
+    gap: 1px;
+    place-items: center;
 }
 
 .result-value {
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--gold);
+    font-family: var(--font-num);
+    font-size: 3.05rem;
+    font-weight: 750;
     line-height: 1;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold);
+    text-shadow: 0 2px 18px color-mix(in oklab, var(--gold) 35%, transparent);
 }
 
-/* ── Autocomplete ────────────────────────────────────── */
-.ac-wrap {
-    position: relative;
+.result-value.is-empty {
+    color: rgba(255, 255, 255, 0.35);
+    text-shadow: none;
 }
 
-.ac-list {
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    right: 0;
-    margin: 0;
-    background: #fff;
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    color: var(--text);
-    padding: 6px;
-    list-style: none;
-    z-index: 10001;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.ac-item {
-    padding: 9px 12px;
-    border-radius: 6px;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 0.88rem;
-    transition: background 0.12s;
-}
-
-.ac-item.is-active,
-.ac-item:hover {
-    background: var(--blue);
-    color: #fff;
+.result-scale {
+    font-size: 0.74rem;
     font-weight: 600;
+    letter-spacing: 0.07em;
+    color: rgba(255, 255, 255, 0.5);
 }
 
-.ac-item-muted {
-    color: var(--text-muted);
-    cursor: default;
-    font-style: italic;
+.result-label {
+    position: relative;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.66);
 }
 
-.ac-item-muted:hover {
-    background: transparent;
-    color: var(--text-muted);
-    font-weight: 400;
+.result-band {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 5px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--r-full);
+    background: rgba(255, 255, 255, 0.09);
+    font-size: 0.79rem;
+    font-weight: 650;
+    color: #fff;
 }
 
-/* ── Inline Notice ───────────────────────────────────── */
-.form-notice {
-    display: none;
-    margin: 12px 20px 0;
-    padding: 10px 14px;
-    background: #fffbeb;
-    border: 1px solid #fcd34d;
-    border-radius: 8px;
-    color: #92400e;
-    font-size: 0.88rem;
+.result-band::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--band-color, var(--gold));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--band-color, var(--gold)) 30%, transparent);
+}
+
+/* Subgrid keeps the values on one baseline even when a label wraps */
+.result-stats {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1px;
+    margin: 20px 0 0;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.result-stats div {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    align-content: start;
+    padding: 0 4px;
+}
+
+.result-stats div + div {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.result-stats dt {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.result-stats dd {
+    margin: 3px 0 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+}
+
+.summary-foot {
+    padding: 12px 18px;
+    border-top: 1px solid var(--divider);
+    background: var(--surface-2);
+    color: var(--text-faint);
+    font-size: 0.74rem;
     line-height: 1.5;
+    text-align: center;
+}
+
+/* Grade distribution mini-chart */
+.dist-list {
+    display: grid;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dist-row {
+    display: grid;
+    grid-template-columns: 30px 1fr 34px;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.78rem;
+}
+
+.dist-grade {
+    font-weight: 700;
+    color: var(--grade-color, var(--text-muted));
+}
+
+.dist-bar {
+    height: 7px;
+    border-radius: var(--r-full);
+    background: var(--surface-3);
+    overflow: hidden;
+}
+
+.dist-bar span {
+    display: block;
+    height: 100%;
+    border-radius: var(--r-full);
+    background: var(--grade-color, var(--brand-500));
+    transform-origin: left;
+    animation: bar-in var(--slow) var(--ease-out) both;
+}
+
+@keyframes bar-in {
+    from {
+        transform: scaleX(0);
+    }
+
+    to {
+        transform: scaleX(1);
+    }
+}
+
+.dist-count {
+    color: var(--text-faint);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.dist-empty {
+    margin: 0;
+    color: var(--text-faint);
+    font-size: 0.83rem;
+    text-align: center;
+}
+
+/* ── 13. Toast notice ────────────────────────────────────────── */
+.form-notice {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    width: min(440px, calc(100vw - 28px));
+    padding: 13px 16px;
+    border: 1px solid var(--warn-line);
+    border-radius: var(--r-md);
+    background: var(--warn-soft);
+    color: var(--warn);
+    font-size: 0.87rem;
+    line-height: 1.5;
+    box-shadow: var(--shadow-lg);
+    transform: translate(-50%, calc(100% + 34px));
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--mid) var(--ease-out), opacity var(--mid) var(--ease),
+        visibility var(--mid);
+}
+
+@supports (backdrop-filter: blur(1px)) {
+    .form-notice {
+        background: color-mix(in oklab, var(--warn-soft) 88%, transparent);
+        backdrop-filter: blur(14px) saturate(160%);
+    }
 }
 
 .form-notice.is-visible {
-    display: block;
+    transform: translate(-50%, 0);
+    opacity: 1;
+    visibility: visible;
 }
 
-/* ── Notes / Formula Section ─────────────────────────── */
-.formula-box {
-    background: var(--stripe);
+.form-notice::before {
+    content: "!";
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 19px;
+    height: 19px;
+    margin-top: 1px;
+    border-radius: 50%;
+    background: currentColor;
+    color: var(--warn-soft);
+    font-size: 0.74rem;
+    font-weight: 800;
+}
+
+.form-notice .notice-action {
+    margin-left: auto;
+    padding: 3px 10px;
+    border: 1px solid currentColor;
+    border-radius: var(--r-full);
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--fast) var(--ease);
+}
+
+.form-notice .notice-action:hover {
+    background: color-mix(in oklab, currentColor 14%, transparent);
+}
+
+/* ── 14. Dialog ──────────────────────────────────────────────── */
+.modal {
+    width: min(400px, calc(100vw - 32px));
+    padding: 0;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal::backdrop {
+    background: rgba(6, 12, 24, 0.55);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+.modal[open] {
+    animation: modal-in var(--mid) var(--ease-out) both;
+}
+
+@keyframes modal-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.modal-body {
+    padding: 24px 24px 6px;
+}
+
+.modal-body h2 {
+    margin: 0 0 8px;
+    font-size: 1.12rem;
+}
+
+.modal-body p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding: 18px 24px 20px;
+}
+
+/* ── 15. Notes, formula, badges ──────────────────────────────── */
+.formula-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 18px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 0.98rem;
     text-align: center;
-    font-size: 1rem;
-    margin: 10px 0 18px;
 }
 
 .fraction {
     display: inline-block;
     vertical-align: middle;
     text-align: center;
-    margin-left: 4px;
 }
 
 .fraction .numer {
     display: block;
-    padding: 0 10px 4px;
-    border-bottom: 1.5px solid var(--text);
+    padding: 0 12px 5px;
+    border-bottom: 1.5px solid var(--border-strong);
 }
 
 .fraction .denom {
     display: block;
-    padding: 4px 10px 0;
+    padding: 5px 12px 0;
 }
 
 .note-text {
-    color: var(--text-muted);
-    line-height: 1.8;
     margin: 0 0 14px;
+    color: var(--text-muted);
     font-size: 0.92rem;
+    line-height: 1.75;
 }
 
 .card-body .note-text:last-child {
@@ -467,199 +1517,321 @@ body {
 .grade-badges {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+    gap: 9px;
 }
 
 .badge {
-    background: var(--stripe);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 4px 12px;
-    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px 6px 13px;
+    border: 1px solid color-mix(in oklab, var(--badge-color, var(--border-strong)) 34%, transparent);
+    border-radius: var(--r-full);
+    background: color-mix(in oklab, var(--badge-color, var(--surface-3)) 10%, transparent);
+    color: var(--badge-color, var(--text));
     font-size: 0.83rem;
-    font-weight: 600;
-}
-
-/* ── About Page: Developer Info ──────────────────────── */
-.dev-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.dev-avatar {
-    background: var(--stripe);
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
     font-weight: 700;
-    color: var(--blue);
-    border: 2px solid var(--border);
-    flex-shrink: 0;
+}
+
+.badge-points {
+    display: grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: var(--r-full);
+    background: color-mix(in oklab, var(--badge-color, var(--brand)) 18%, transparent);
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Feature grid (about page) */
+.feature-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.feature {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: var(--surface-2);
+    transition: border-color var(--mid) var(--ease), transform var(--mid) var(--ease-out),
+        box-shadow var(--mid) var(--ease);
+}
+
+.feature:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.feature-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
+    border-radius: var(--r-sm);
+    background: color-mix(in oklab, var(--brand-500) 14%, transparent);
+    color: var(--brand-600);
+}
+
+.feature-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.feature h4 {
+    margin: 0 0 5px;
+    font-size: 0.94rem;
+}
+
+.feature p {
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    line-height: 1.6;
 }
 
 .btn-email {
-    display: inline-block;
-    padding: 7px 18px;
-    border-radius: 7px;
-    background: #fff;
-    color: var(--blue);
-    border: 1.5px solid var(--blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 10px 20px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-sm);
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 0.88rem;
-    font-weight: 600;
+    font-weight: 650;
     text-decoration: none;
-    transition: background 0.15s;
+    transition: background var(--fast) var(--ease), border-color var(--fast) var(--ease),
+        transform var(--fast) var(--ease);
 }
 
 .btn-email:hover {
-    background: #eff6ff;
+    background: var(--hover-tint);
+    border-color: var(--brand-500);
+    color: var(--text);
+    transform: translateY(-1px);
 }
 
-/* ── Site Footer ─────────────────────────────────────── */
+.btn-email svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ── 16. Footer ──────────────────────────────────────────────── */
 .site-footer {
-    text-align: center;
-    padding: 16px 0 8px;
-    font-size: 0.865rem;
-    color: var(--text-muted);
+    margin-top: clamp(28px, 4vw, 44px);
+    padding-top: 22px;
+    border-top: 1px solid var(--divider);
+    color: var(--text-faint);
+    font-size: 0.84rem;
     line-height: 1.7;
+    text-align: center;
 }
 
-.site-footer a {
-    color: var(--blue);
-    text-decoration: none;
+.site-footer strong {
+    color: var(--text-muted);
 }
 
-.site-footer a:hover {
-    text-decoration: underline;
+.site-footer .disclaimer {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-full);
+    background: var(--surface-2);
+    font-size: 0.76rem;
 }
 
-/* ── Mobile: card-per-row layout (≤600px) ────────────── */
-@media (max-width: 600px) {
+/* ── 17. Responsive ──────────────────────────────────────────── */
+@media (max-width: 720px) {
     .header-inner {
-        height: auto;
-        padding: 10px 14px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        flex-wrap: wrap;
+        padding-block: 10px;
+        gap: 10px;
     }
 
     .site-nav {
-        gap: 4px;
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
     }
 
     .nav-link {
-        padding: 5px 11px;
-        font-size: 0.82rem;
+        flex: 1;
+        padding-inline: 8px;
+        text-align: center;
+        font-size: 0.8rem;
     }
+}
 
-    .page-wrap {
-        padding: 14px 10px 36px;
-    }
-
-    /* Hide thead — labels come from data-label pseudo-elements */
+@media (max-width: 640px) {
+    /* The table becomes one card per course */
     .transcript-table thead {
         display: none;
     }
 
-    /* Each row becomes a card */
     .transcript-table tbody tr {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
+        margin: 10px 12px;
+        padding: 4px 0 8px;
         border: 1px solid var(--border);
-        border-radius: 8px;
-        margin: 8px 10px;
-        padding: 0;
-        background: var(--card-bg) !important;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border-radius: var(--r-md);
+        background: var(--surface-2);
     }
 
-    .transcript-table tbody tr:hover {
-        background: var(--hover-row) !important;
+    .transcript-table tbody tr:last-child {
+        border-bottom: 1px solid var(--border);
     }
 
-    /* All cells block by default, override below */
     .transcript-table td {
         display: block;
-        padding: 8px 12px;
+        padding: 6px 12px;
         border: none;
     }
 
-    /* Course input — full width, separated by border */
     .transcript-table td[data-label="Course"] {
         flex: 0 0 100%;
-        border-bottom: 1px solid var(--border);
-        padding: 10px 12px;
+        padding-top: 10px;
     }
 
-    /* Bottom row cells */
-    .transcript-table td[data-label="Credits"] {
-        flex: 0 0 auto;
-        font-size: 0.83rem;
-        color: var(--text-muted);
+    .transcript-table td[data-label="Credits"],
+    .transcript-table td[data-label="GP"] {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 7px;
+        flex: 0 0 auto;
+        font-size: 0.78rem;
+        color: var(--text-faint);
+        font-weight: 650;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
     .transcript-table td[data-label="Credits"]::before {
-        content: "Cr:";
-        font-weight: 600;
-        color: var(--text);
-    }
-
-    .transcript-table td[data-label="Grade"] {
-        flex: 1;
-        min-width: 100px;
-    }
-
-    .transcript-table td[data-label="GP"] {
-        flex: 0 0 auto;
-        font-size: 0.83rem;
-        color: var(--text-muted);
-        display: flex;
-        align-items: center;
-        gap: 4px;
+        content: "Credits";
     }
 
     .transcript-table td[data-label="GP"]::before {
-        content: "GP:";
-        font-weight: 600;
-        color: var(--text);
+        content: "Points";
+    }
+
+    .credits-input {
+        width: 62px;
+        margin: 0;
+    }
+
+    .transcript-table td[data-label="Grade"] {
+        flex: 1 1 120px;
+        min-width: 110px;
     }
 
     .transcript-table td[data-label="Action"] {
         flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        padding: 6px 12px;
+        margin-left: auto;
     }
 
-    /* Stack action bar buttons full-width */
     .action-bar {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
-        padding: 12px 14px;
     }
 
     .action-right {
-        flex-direction: column;
+        flex-direction: column-reverse;
         gap: 8px;
     }
 
     .btn {
         width: 100%;
-        text-align: center;
-        padding: 12px;
+    }
+
+    .kbd-hint {
+        display: none;
+    }
+
+    .result-dial {
+        width: 152px;
+        height: 152px;
     }
 
     .result-value {
-        font-size: 2.4rem;
+        font-size: 2.7rem;
+    }
+
+    .form-notice {
+        bottom: 14px;
+    }
+}
+
+@media (max-width: 430px) {
+    /* Not enough room for the header hint beside the label */
+    .card-header .hint {
+        display: none;
+    }
+}
+
+/* ── 18. Motion & print ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+@media print {
+    body::before,
+    .site-header,
+    .action-bar,
+    .btn-remove,
+    .form-notice,
+    .modal,
+    .skip-link,
+    .table-empty {
+        display: none !important;
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    .card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+
+    .result-panel {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ccc;
+    }
+
+    .result-value,
+    .result-label,
+    .result-stats dt,
+    .result-stats dd,
+    .result-band {
+        color: #000 !important;
+        text-shadow: none !important;
+    }
+
+    .workspace {
+        display: block;
     }
 }
