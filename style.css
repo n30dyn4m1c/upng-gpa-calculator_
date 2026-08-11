@@ -1,6 +1,8 @@
 /* ════════════════════════════════════════════════════════════════
    UPNG GPA Calculator — Design System
    Heritage navy + gold, rebuilt for a modern, accessible, dual-theme UI.
+   The masthead stays institutional navy in both themes: this is a
+   university tool first and a web app second.
    No external fonts or assets: everything here is self-contained.
    ════════════════════════════════════════════════════════════════ */
 
@@ -13,6 +15,16 @@
     --brand-400: #4b93e0;
     --gold: #ffc93c;
     --gold-deep: #a97400;
+    /* Brand ink — navy text that stays legible on the page background */
+    --brand-ink: #0a4a8f;
+
+    /* Masthead — fixed across themes so the institutional bar never changes */
+    --masthead: #002b57;
+    --masthead-2: #004a8f;
+    --on-masthead: #ffffff;
+    --on-masthead-muted: rgba(255, 255, 255, 0.76);
+    --masthead-line: rgba(255, 255, 255, 0.16);
+    --masthead-tint: rgba(255, 255, 255, 0.09);
 
     /* Canvas & surfaces */
     --bg: #f4f6fa;
@@ -94,6 +106,10 @@
         --brand-400: #7fb4f2;
         --gold: #ffd166;
         --gold-deep: #ffcf5c;
+        --brand-ink: #7fb4f2;
+
+        --masthead: #041a33;
+        --masthead-2: #0a3466;
 
         --bg: #070b13;
         --surface: #0e1522;
@@ -145,6 +161,10 @@
     --brand-400: #7fb4f2;
     --gold: #ffd166;
     --gold-deep: #ffcf5c;
+    --brand-ink: #7fb4f2;
+
+    --masthead: #041a33;
+    --masthead-2: #0a3466;
 
     --bg: #070b13;
     --surface: #0e1522;
@@ -299,20 +319,18 @@ a:hover {
     color: #fff;
 }
 
-/* ── 4. Header ───────────────────────────────────────────────── */
+/* ── 4. Masthead ─────────────────────────────────────────────── */
+/* The institutional bar: heritage navy with a gold rule, identical in
+   light and dark so the university identity is never themed away. */
 .site-header {
     position: sticky;
     top: 0;
     z-index: 120;
-    background: color-mix(in oklab, var(--surface) 78%, transparent);
-    border-bottom: 1px solid var(--divider);
-}
-
-@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    .site-header {
-        -webkit-backdrop-filter: blur(18px) saturate(180%);
-        backdrop-filter: blur(18px) saturate(180%);
-    }
+    color: var(--on-masthead);
+    background:
+        linear-gradient(100deg, var(--masthead) 0%, var(--masthead) 42%, var(--masthead-2) 130%);
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 1px 16px rgba(0, 22, 48, 0.24);
 }
 
 .header-inner {
@@ -325,51 +343,68 @@ a:hover {
     gap: 16px;
 }
 
+/* Brand lockup: crest, institution name, tool name */
 .header-brand {
     display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
     margin-right: auto;
-    color: var(--text);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
+    min-width: 0;
+    color: var(--on-masthead);
     text-decoration: none;
-    white-space: nowrap;
 }
 
 .brand-mark {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
-    border-radius: 10px;
-    box-shadow: var(--shadow-sm);
     transition: transform var(--mid) var(--ease-out);
 }
 
 .header-brand:hover .brand-mark {
-    transform: rotate(-6deg) scale(1.06);
+    transform: scale(1.05);
 }
 
-.brand-accent {
-    color: var(--gold-deep);
+.brand-lockup {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.15;
 }
 
-/* Segmented navigation */
+.brand-institution {
+    color: var(--gold);
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.brand-tool {
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    white-space: nowrap;
+}
+
+/* Segmented navigation, sitting on the navy */
 .site-nav {
     display: flex;
     gap: 2px;
     padding: 4px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--masthead-line);
     border-radius: var(--r-full);
-    background: var(--surface-2);
+    background: var(--masthead-tint);
 }
 
 .nav-link {
     position: relative;
     padding: 7px 15px;
     border-radius: var(--r-full);
-    color: var(--text-muted);
+    color: var(--on-masthead-muted);
     font-size: 0.855rem;
     font-weight: 600;
     text-decoration: none;
@@ -378,14 +413,19 @@ a:hover {
 }
 
 .nav-link:hover {
-    color: var(--text);
-    background: var(--hover-tint);
+    color: var(--on-masthead);
+    background: rgba(255, 255, 255, 0.14);
 }
 
 .nav-link.active {
-    background: var(--brand);
-    color: #fff;
-    box-shadow: var(--shadow-sm);
+    background: var(--on-masthead);
+    color: var(--masthead);
+    font-weight: 700;
+}
+
+.nav-link.active:hover {
+    background: var(--on-masthead);
+    color: var(--masthead);
 }
 
 .theme-toggle {
@@ -395,19 +435,24 @@ a:hover {
     height: 38px;
     flex-shrink: 0;
     padding: 0;
-    border: 1px solid var(--border);
+    border: 1px solid var(--masthead-line);
     border-radius: var(--r-full);
-    background: var(--surface-2);
-    color: var(--text-muted);
+    background: var(--masthead-tint);
+    color: var(--on-masthead-muted);
     cursor: pointer;
     transition: color var(--fast) var(--ease), background var(--fast) var(--ease),
         border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
 }
 
 .theme-toggle:hover {
-    color: var(--text);
-    border-color: var(--border-strong);
-    background: var(--surface-3);
+    color: var(--on-masthead);
+    border-color: rgba(255, 255, 255, 0.34);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+/* The brand-blue ring disappears against navy — go gold inside the masthead */
+.site-header :focus-visible {
+    outline-color: var(--gold);
 }
 
 .theme-toggle:active {
@@ -491,10 +536,10 @@ a:hover {
     gap: 8px;
     margin-bottom: 14px;
     padding: 5px 12px 5px 8px;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in oklab, var(--brand-500) 26%, transparent);
     border-radius: var(--r-full);
-    background: var(--surface-2);
-    color: var(--text-muted);
+    background: color-mix(in oklab, var(--brand-500) 9%, var(--surface));
+    color: var(--brand-ink);
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -1627,11 +1672,47 @@ td[data-label="GP"] {
 .site-footer {
     margin-top: clamp(28px, 4vw, 44px);
     padding-top: 22px;
-    border-top: 1px solid var(--divider);
+    border-top: 3px solid var(--gold);
     color: var(--text-faint);
     font-size: 0.84rem;
     line-height: 1.7;
     text-align: center;
+}
+
+/* Institutional sign-off: crest, university name, affiliation status */
+.footer-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.footer-brand .brand-mark {
+    width: 34px;
+    height: 34px;
+}
+
+.footer-institution {
+    display: block;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.footer-unit {
+    display: block;
+    color: var(--text-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.site-footer p {
+    margin: 0;
 }
 
 .site-footer strong {
@@ -1640,12 +1721,19 @@ td[data-label="GP"] {
 
 .site-footer .disclaimer {
     display: inline-block;
-    margin-bottom: 8px;
-    padding: 4px 12px;
+    max-width: 62ch;
+    margin-bottom: 10px;
+    padding: 7px 14px;
     border: 1px solid var(--border);
-    border-radius: var(--r-full);
+    border-radius: var(--r-md);
     background: var(--surface-2);
+    color: var(--text-muted);
     font-size: 0.76rem;
+    line-height: 1.55;
+}
+
+.site-footer .disclaimer strong {
+    color: var(--text);
 }
 
 /* ── 17. Responsive ──────────────────────────────────────────── */
@@ -1654,6 +1742,15 @@ td[data-label="GP"] {
         flex-wrap: wrap;
         padding-block: 10px;
         gap: 10px;
+    }
+
+    .brand-institution {
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
+    }
+
+    .brand-tool {
+        font-size: 0.95rem;
     }
 
     .site-nav {
@@ -1795,19 +1892,44 @@ td[data-label="GP"] {
 
 @media print {
     body::before,
-    .site-header,
     .action-bar,
     .btn-remove,
     .form-notice,
     .modal,
     .skip-link,
-    .table-empty {
+    .table-empty,
+    .site-nav,
+    .theme-toggle {
         display: none !important;
     }
 
     body {
         background: #fff;
         color: #000;
+    }
+
+    /* The masthead prints as a letterhead so a printed record is identifiable */
+    .site-header {
+        position: static;
+        background: #fff !important;
+        color: #000;
+        border-bottom: 2px solid #000;
+        box-shadow: none;
+    }
+
+    .header-inner {
+        padding-inline: 0;
+        min-height: 0;
+        padding-block: 0 10px;
+    }
+
+    .header-brand,
+    .brand-institution {
+        color: #000;
+    }
+
+    .site-footer {
+        border-top-color: #000;
     }
 
     .card {
