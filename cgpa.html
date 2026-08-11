@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CGPA Calculator | UPNG</title>
     <meta name="description" content="Calculate your cumulative GPA (CGPA) across semesters using the University of Papua New Guinea (UPNG) grading scale. Repeat courses count only the highest grade.">
-    <meta name="theme-color" content="#f4f6fa" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#070b13" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#002b57" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#041a33" media="(prefers-color-scheme: dark)">
     <meta property="og:title" content="UPNG CGPA Calculator">
     <meta property="og:description" content="Calculate your cumulative GPA across semesters using the UPNG grading scale.">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="UPNG GPA &amp; CGPA Calculator">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <script>
@@ -31,18 +32,19 @@
         <div class="header-inner">
             <a class="header-brand" href="index.html">
                 <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
-                    <defs>
-                        <linearGradient id="brandMark" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stop-color="#2a7bd0" />
-                            <stop offset="100%" stop-color="#00284d" />
-                        </linearGradient>
-                    </defs>
-                    <rect width="40" height="40" rx="11" fill="url(#brandMark)" />
-                    <circle cx="20" cy="20" r="11" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="3.2" />
-                    <path d="M20 9a11 11 0 0 1 9.53 16.5" fill="none" stroke="#ffc93c" stroke-width="3.2" stroke-linecap="round" />
-                    <circle cx="20" cy="20" r="2.6" fill="#ffc93c" />
+                    <path d="M20 2.4 35.6 7.5v12.4c0 8.7-6.6 14.8-15.6 17.9C11 34.7 4.4 28.6 4.4 19.9V7.5Z"
+                        fill="#08386c" stroke="#ffc93c" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M20 6.7 32 10.6v9.3c0 6.6-5 11.3-12 13.9-7-2.6-12-7.3-12-13.9v-9.3Z"
+                        fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.9" stroke-linejoin="round" />
+                    <path d="M20 7.3 21.12 10.06 24.09 10.27 21.81 12.19 22.53 15.08 20 13.5 17.47 15.08 18.19 12.19 15.91 10.27 18.88 10.06Z" fill="#ffc93c" />
+                    <path d="M11.6 19.6c2.7-1.2 5.6-1.2 8.4 0v8.5c-2.8-1.2-5.7-1.2-8.4 0z" fill="#ffffff" />
+                    <path d="M28.4 19.6c-2.7-1.2-5.6-1.2-8.4 0v8.5c2.8-1.2 5.7-1.2 8.4 0z" fill="#ffffff" />
+                    <path d="M20 19.6v8.5" stroke="#08386c" stroke-width="1" />
                 </svg>
-                <span><span class="brand-accent">UPNG</span> GPA Calculator</span>
+                <span class="brand-lockup">
+                    <span class="brand-institution">University of Papua New Guinea</span>
+                    <span class="brand-tool">GPA &amp; CGPA Calculator</span>
+                </span>
             </a>
 
             <nav class="site-nav" aria-label="Primary">
@@ -155,8 +157,27 @@
         </div>
 
         <footer class="site-footer">
+            <div class="footer-brand">
+                <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+                    <path d="M20 2.4 35.6 7.5v12.4c0 8.7-6.6 14.8-15.6 17.9C11 34.7 4.4 28.6 4.4 19.9V7.5Z"
+                        fill="#08386c" stroke="#ffc93c" stroke-width="1.5" stroke-linejoin="round" />
+                    <path d="M20 6.7 32 10.6v9.3c0 6.6-5 11.3-12 13.9-7-2.6-12-7.3-12-13.9v-9.3Z"
+                        fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.9" stroke-linejoin="round" />
+                    <path d="M20 7.3 21.12 10.06 24.09 10.27 21.81 12.19 22.53 15.08 20 13.5 17.47 15.08 18.19 12.19 15.91 10.27 18.88 10.06Z" fill="#ffc93c" />
+                    <path d="M11.6 19.6c2.7-1.2 5.6-1.2 8.4 0v8.5c-2.8-1.2-5.7-1.2-8.4 0z" fill="#ffffff" />
+                    <path d="M28.4 19.6c-2.7-1.2-5.6-1.2-8.4 0v8.5c2.8-1.2 5.7-1.2 8.4 0z" fill="#ffffff" />
+                    <path d="M20 19.6v8.5" stroke="#08386c" stroke-width="1" />
+                </svg>
+                <span>
+                    <span class="footer-institution">University of Papua New Guinea</span>
+                    <span class="footer-unit">GPA &amp; CGPA Calculator</span>
+                </span>
+            </div>
             <p>
-                <span class="disclaimer">In testing — not yet officially released. For personal use only.</span><br>
+                <span class="disclaimer"><strong>Not an official university service.</strong> This
+                    tool is in testing and has not been officially released by the University of
+                    Papua New Guinea. Results are indicative — your official record is the one
+                    issued by the university.</span><br>
                 <strong>$N30</strong> &bull; <a href="mailto:n30dyn4m1c+upnggpa@gmail.com">n30dyn4m1c+upnggpa@gmail.com</a><br>
                 <small>Last updated: Jul 2026</small>
             </p>

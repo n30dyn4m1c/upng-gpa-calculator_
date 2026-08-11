@@ -20,6 +20,7 @@ Built around the University of Papua New Guinea grading scale and official cours
 - **Course autocomplete** — search 1,100+ official UPNG courses by code or name, with matched text highlighted and credit values filled in automatically (arrow keys, Enter, Escape)
 - **Manual entry** — courses not in the list can be typed in, with credits entered by hand
 - **Saved locally** — entries are restored on your next visit via `localStorage`, and clearing everything can be undone
+- **Institutional identity** — heritage navy-and-gold masthead with the university crest and full name, held constant in both themes, plus a matching footer sign-off and a letterhead when printed
 - **Light & dark themes** — follows your system setting, with a toggle that is remembered
 - **Responsive design** — the course table switches to a card layout on small screens
 - **Accessible** — keyboard-navigable throughout, with a skip link, focus-visible rings, live-region announcements, and `prefers-reduced-motion` support
